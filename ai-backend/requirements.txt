@@ -1,0 +1,10 @@
+fastapi==0.104.1
+uvicorn==0.24.0
+openai==1.109.1
+pydantic==2.12.0a1
+pandas==2.3.1
+numpy==2.1.0
+python-multipart==0.0.6
+scikit-learn==1.7.1
+scipy==1.14.1
+python-dotenv==1.0.0
