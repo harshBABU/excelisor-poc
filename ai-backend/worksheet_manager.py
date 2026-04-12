@@ -2525,34 +2525,77 @@ Return only the sheet name, nothing else."""
         if metric_col not in header_idx or group_col not in header_idx:
             return []
         
-                # Recent fix: Convert column names to letters for Excel formulas
+        # Convert column names to letters for Excel formulas
         metric_col_letter = metric_col
         group_col_letter = group_col
-
-
-
 
         if header_map:
             if metric_col in header_map:
                 metric_col_letter = header_map[metric_col]
-
             else:
                 logger.debug(f"metric_col '{metric_col}' not found in header_map")
 
             if group_col in header_map:
                 group_col_letter = header_map[group_col]
-
             else:
                 logger.debug(f"group_col '{group_col}' not found in header_map")
 
-        else:
-            pass
-
         metric_idx = header_idx[metric_col]
         group_idx = header_idx[group_col]
-        
+
+        # ---------------------------------------------------------------
+        # Excel serial-date detection
+        # Excel stores dates as integers since 1900-01-00 (epoch = 1899-12-30).
+        # Detect if the groupby column is a date stored as serial number:
+        #   - column name contains a date keyword, AND
+        #   - sample values are integers in the plausible date range (25569..73050 = 1970-2099)
+        # If so, convert each serial to a YYYY-MM month key for grouping.
+        # ---------------------------------------------------------------
+        from datetime import datetime as _dt, timedelta as _td
+
+        DATE_KEYWORDS = ("date", "time", "dt", "day", "month", "year", "period", "created", "updated")
+        EXCEL_EPOCH = _dt(1899, 12, 30)          # Excel day-0
+        SERIAL_MIN  = 25569                       # 1970-01-01
+        SERIAL_MAX  = 73050                       # 2099-12-31
+
+        def _is_excel_date_col(col_name: str, sample_vals: list) -> bool:
+            """Return True when the column looks like an Excel date serial column."""
+            name_lower = col_name.lower()
+            if not any(kw in name_lower for kw in DATE_KEYWORDS):
+                return False
+            numerics = [v for v in sample_vals if isinstance(v, (int, float)) and not isinstance(v, bool)]
+            if len(numerics) < max(1, len(sample_vals) // 2):
+                return False  # most values are non-numeric
+            return all(SERIAL_MIN <= int(v) <= SERIAL_MAX for v in numerics)
+
+        def _serial_to_ym(serial) -> str:
+            """Convert an Excel serial number to 'YYYY-MM'."""
+            try:
+                d = EXCEL_EPOCH + _td(days=int(serial))
+                return d.strftime("%Y-%m")
+            except Exception:
+                return str(serial)
+
+        # Sample the group column values from data_rows to decide
+        gc_sample_vals = [
+            row[group_idx] for row in data_rows[:50]
+            if group_idx < len(row) and row[group_idx] is not None
+        ]
+        is_date_serial_col = _is_excel_date_col(group_col, gc_sample_vals)
+
+        if is_date_serial_col:
+            logger.info(
+                f"Detected Excel date serial column '{group_col}'. "
+                "Grouping by YYYY-MM month for month-on-month analysis."
+            )
+
         # Group data by the groupby column
         groups = {}
+        # When grouping by a date serial column we also need to track the raw
+        # year/month integers so we can build correct SUMIFS Excel formulas.
+        # groups_ym maps group_key -> (year, month) for date serial columns.
+        groups_ym: dict = {}
+
         for row in data_rows:
             if group_idx < len(row) and metric_idx < len(row):
                 group_value = row[group_idx]
@@ -2561,8 +2604,17 @@ Return only the sheet name, nothing else."""
                 # Skip empty or null group values
                 if group_value is None or group_value == '':
                     continue
-                
-                group_key = str(group_value)
+
+                # Convert Excel serial to YYYY-MM if applicable
+                if is_date_serial_col:
+                    try:
+                        d = EXCEL_EPOCH + _td(days=int(group_value))
+                        group_key = d.strftime("%Y-%m")          # e.g. "2023-01"
+                        groups_ym[group_key] = (d.year, d.month)  # store for formula
+                    except Exception:
+                        group_key = str(group_value)
+                else:
+                    group_key = str(group_value)
                 
                 # For COUNT operations, we don't need numeric conversion of metric values
                 if aggregation in ["COUNT", "FREQUENCY"]:
@@ -2693,14 +2745,58 @@ Return only the sheet name, nothing else."""
             else:
                 agg_value = sum(values)  # Default to SUM
             
-            # Create result entry with appropriate Excel formula based on aggregation type
-            # Use correct column references for dynamic formulas
-            # Recent fix: The criteria should reference column A (where group names are stored) in the same row as the formula
-            # Note: The actual row will be determined when the formula is placed in the worksheet
-            criteria_cell = f"A{result_row}"  # Reference the cell containing the group name in column A
+            # Create result entry with appropriate Excel formula based on aggregation type.
+            # For date-serial columns we group by YYYY-MM, so we build SUMIFS formulas
+            # that filter on YEAR() and MONTH() rather than matching the raw serial string.
+            criteria_cell = f"A{result_row}"  # Holds the group label (e.g. "2023-01") in col A
 
-            
-            if aggregation in ["SUM", "TOTAL"]:
+            if is_date_serial_col and group_name in groups_ym:
+                yr, mo = groups_ym[group_name]
+                # Date-aware SUM: SUMPRODUCT so we can apply two criteria on a computed expression
+                if aggregation in ["SUM", "TOTAL"]:
+                    formula = (
+                        f"=SUMPRODUCT("
+                        f"(YEAR({source_sheet}!{group_col_letter}:{group_col_letter})={yr})*"
+                        f"(MONTH({source_sheet}!{group_col_letter}:{group_col_letter})={mo})*"
+                        f"{source_sheet}!{metric_col_letter}:{metric_col_letter})"
+                    )
+                elif aggregation in ["COUNT", "FREQUENCY"]:
+                    formula = (
+                        f"=SUMPRODUCT("
+                        f"(YEAR({source_sheet}!{group_col_letter}:{group_col_letter})={yr})*"
+                        f"(MONTH({source_sheet}!{group_col_letter}:{group_col_letter})={mo}))"
+                    )
+                elif aggregation in ["AVERAGE", "MEAN", "AVG"]:
+                    formula = (
+                        f"=IFERROR(SUMPRODUCT("
+                        f"(YEAR({source_sheet}!{group_col_letter}:{group_col_letter})={yr})*"
+                        f"(MONTH({source_sheet}!{group_col_letter}:{group_col_letter})={mo})*"
+                        f"{source_sheet}!{metric_col_letter}:{metric_col_letter})/"
+                        f"SUMPRODUCT("
+                        f"(YEAR({source_sheet}!{group_col_letter}:{group_col_letter})={yr})*"
+                        f"(MONTH({source_sheet}!{group_col_letter}:{group_col_letter})={mo})),0)"
+                    )
+                elif aggregation in ["MAX", "MAXIMUM"]:
+                    formula = (
+                        f"=MAXIFS({source_sheet}!{metric_col_letter}:{metric_col_letter},"
+                        f"YEAR({source_sheet}!{group_col_letter}:{group_col_letter}),{yr},"
+                        f"MONTH({source_sheet}!{group_col_letter}:{group_col_letter}),{mo})"
+                    )
+                elif aggregation in ["MIN", "MINIMUM"]:
+                    formula = (
+                        f"=MINIFS({source_sheet}!{metric_col_letter}:{metric_col_letter},"
+                        f"YEAR({source_sheet}!{group_col_letter}:{group_col_letter}),{yr},"
+                        f"MONTH({source_sheet}!{group_col_letter}:{group_col_letter}),{mo})"
+                    )
+                else:
+                    # Fallback: SUMPRODUCT SUM for unknown aggregations on date cols
+                    formula = (
+                        f"=SUMPRODUCT("
+                        f"(YEAR({source_sheet}!{group_col_letter}:{group_col_letter})={yr})*"
+                        f"(MONTH({source_sheet}!{group_col_letter}:{group_col_letter})={mo})*"
+                        f"{source_sheet}!{metric_col_letter}:{metric_col_letter})"
+                    )
+            elif aggregation in ["SUM", "TOTAL"]:
                 formula = f"=SUMIF({source_sheet}!{group_col_letter}:{group_col_letter},{criteria_cell},{source_sheet}!{metric_col_letter}:{metric_col_letter})"
 
 
@@ -2781,8 +2877,12 @@ Return only the sheet name, nothing else."""
             #print(f"[LOG] Added grouped result: {group_name} = {agg_value}")
             result_row += 1  # Increment for next result
         
-        # Sort results by value in descending order for better presentation
-        results.sort(key=lambda x: x["value"], reverse=True)
+        # For date serial columns, sort chronologically (by the YYYY-MM key in description)
+        # rather than by value, so the table and chart display months in the right order.
+        if is_date_serial_col:
+            results.sort(key=lambda x: x["description"])
+        else:
+            results.sort(key=lambda x: x["value"], reverse=True)
         
         return results
     

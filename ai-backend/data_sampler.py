@@ -76,6 +76,32 @@ class IntelligentSampler:
     def analyze_headers(self, df: pd.DataFrame) -> Dict[str, Any]:
         """Analyze column headers and data types"""
         try:
+            from datetime import datetime as _dt, timedelta as _td
+
+            # Excel epoch for serial-date detection
+            _EXCEL_EPOCH  = _dt(1899, 12, 30)
+            _SERIAL_MIN   = 25569   # 1970-01-01
+            _SERIAL_MAX   = 73050   # 2099-12-31
+            _DATE_KEYWORDS = ("date", "time", "dt", "day", "month", "year",
+                              "period", "created", "updated")
+
+            def _looks_like_excel_date_col(col_name: str, series: pd.Series) -> bool:
+                """Heuristic: numeric column with a date-like name whose values
+                sit inside the Excel serial-number range."""
+                if not any(kw in col_name.lower() for kw in _DATE_KEYWORDS):
+                    return False
+                if not pd.api.types.is_numeric_dtype(series):
+                    return False
+                vals = series.dropna()
+                if len(vals) == 0:
+                    return False
+                try:
+                    return bool(
+                        (vals >= _SERIAL_MIN).all() and (vals <= _SERIAL_MAX).all()
+                    )
+                except Exception:
+                    return False
+
             analysis = {}
             for col in df.columns:
                 col_data = df[col].dropna()
@@ -83,19 +109,22 @@ class IntelligentSampler:
                     continue
                     
                 # Detect data type and patterns
+                is_excel_dt = _looks_like_excel_date_col(str(col), df[col])
+
                 analysis[str(col)] = {
                     "dtype": str(df[col].dtype),
                     "null_count": df[col].isnull().sum(),
                     "null_percentage": (df[col].isnull().sum() / len(df)) * 100,
                     "unique_values": df[col].nunique(),
                     "sample_values": col_data.head(5).tolist(),
-                    "is_numeric": pd.api.types.is_numeric_dtype(df[col]),
+                    "is_numeric": pd.api.types.is_numeric_dtype(df[col]) and not is_excel_dt,
                     "is_datetime": pd.api.types.is_datetime64_any_dtype(df[col]),
+                    "is_date": is_excel_dt or pd.api.types.is_datetime64_any_dtype(df[col]),
                     "is_categorical": self.is_likely_categorical(df[col])
                 }
                 
-                # Additional analysis for numeric columns
-                if analysis[str(col)]["is_numeric"]:
+                # Additional analysis for numeric columns (skip if it's an Excel date serial)
+                if analysis[str(col)]["is_numeric"] and not is_excel_dt:
                     analysis[str(col)].update({
                         "min": col_data.min(),
                         "max": col_data.max(),
