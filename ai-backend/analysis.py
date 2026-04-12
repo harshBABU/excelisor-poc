@@ -504,7 +504,7 @@ def _execute(plan, df):
 # =========================
 # Responder
 # =========================
-def _respond(question, df, semantics: Dict[str, Any] = None):
+def _respond(question, df, semantics: Dict[str, Any] = None, original_df: pd.DataFrame = None):
     logger.info("=" * 60)
     logger.info("[STEP 6] GENERATING RESPONSE via LLM")
     logger.info(f"  Result DataFrame shape: {df.shape}")
@@ -530,9 +530,31 @@ def _respond(question, df, semantics: Dict[str, Any] = None):
         summary = df[valid_cols].sum().to_frame(name="total").T
         preview = summary.to_csv(index=False)
         logger.warning(f"  DataFrame too large ({len(df)} rows) — sending measure sums to LLM")
-        # logger.info(f"  Column sums:\n{summary.to_string()}")  # verbose
 
-    # logger.info(f"  Preview sent to LLM:\n{preview}")  # verbose
+    # FIX: Inject full dataset context so LLM knows the result is a subset,
+    # preventing it from assuming the filtered rows ARE the entire dataset.
+    if original_df is not None and len(original_df) != len(df):
+        numeric_cols = original_df.select_dtypes(include=["number"]).columns.tolist()
+        ranges = {}
+        for col in numeric_cols[:5]:  # cap at 5 cols to keep prompt lean
+            ranges[col] = {
+                "min": float(original_df[col].min()),
+                "max": float(original_df[col].max()),
+                "mean": round(float(original_df[col].mean()), 2),
+            }
+        dataset_context = (
+            f"\nDATASET CONTEXT (the result below is a SUBSET of the full dataset):\n"
+            f"- Total records in full dataset: {len(original_df):,}\n"
+            f"- Total columns: {len(original_df.columns)}\n"
+            f"- All columns: {', '.join(original_df.columns.tolist())}\n"
+            f"- Records in this result: {len(df):,} (filtered/ranked from {len(original_df):,} total)\n"
+            f"- Full dataset numeric ranges: {json.dumps(ranges)}\n"
+            f"Use this context to give accurate insights — do NOT say there is only 1 record "
+            f"or that the dataset is small.\n"
+        )
+        logger.info(f"  Injecting dataset context: {len(original_df)} total rows, result is {len(df)} rows")
+    else:
+        dataset_context = ""
 
     client = _get_client()
     if not client:
@@ -544,8 +566,8 @@ You are a data analyst assistant. Answer the question using two sources:
 2. YOUR KNOWLEDGE: use your general world knowledge for anything the data cannot answer (e.g. festivals, holidays, events, context).
 
 Always clearly separate what comes from data vs what comes from your general knowledge.
-
-Data:
+{dataset_context}
+Result Data:
 {preview}
 
 Question:
@@ -593,7 +615,7 @@ def analyze_dataframe_agent(question: str, df: pd.DataFrame) -> str:
 
             result = _execute(plan, df)
             result = _force_aggregate_if_needed(intent, result)  # LLM-driven safety net
-            answer = _respond(question, result, semantics=semantics)
+            answer = _respond(question, result, semantics=semantics, original_df=df)
 
             logger.info("=" * 60)
             logger.info(f"[AGENT SUCCESS] Answer: {answer}")
