@@ -257,12 +257,18 @@ export default function App() {
   };
 
   // ── Smart Route (primary chat handler) ───────────────────────────────────
-  const sendMessage = async (userText, contextOverride = null, roundOverride = null) => {
+  const sendMessage = async (
+    userText,
+    contextOverride = null,
+    roundOverride = null,
+    selectedAction = null,
+    suppressUserBubble = false
+  ) => {
     const text = (userText || input).trim();
     if (!text || loading) return;
 
     // Add the user bubble to the chat
-    addMessage("user", text);
+    if (!suppressUserBubble) addMessage("user", text);
     setInput("");
     setLoading(true);
 
@@ -277,6 +283,8 @@ export default function App() {
         question: text,
         context,
         clarification_round: round,
+        selected_action_id: selectedAction?.id || null,
+        selected_mode: selectedAction?.mode || null,
       });
 
       // ── HITL clarification needed ──────────────────────────────────────────
@@ -287,6 +295,7 @@ export default function App() {
         addMessage("assistant", res.clarification_question || "Could you clarify what you're looking for?", {
           type: "clarification",
           options: res.clarification_options || [],
+          actionOptions: res.action_options || [],
           round: nextRound,
           originalQuestion: text,
         });
@@ -347,10 +356,24 @@ export default function App() {
   };
 
   // ── HITL option selection ───────────────────────────────────────────────────
-  const handleClarification = async (option, originalQuestion, round) => {
-    const context = `User question: "${originalQuestion}". User clarified: "${option}".`;
-    addMessage("user", option);
-    await sendMessage(originalQuestion, context, round);
+  const handleClarification = async (option, originalQuestion, round, messageTs) => {
+    const normalized = typeof option === "string"
+      ? { id: option, label: option, mode: null }
+      : option;
+    if (!normalized.mode) {
+      const label = (normalized.label || "").toLowerCase();
+      normalized.mode = label.includes("chart") ? "ai_chart"
+        : label.includes("audit") || label.includes("quality") ? "audit"
+        : label.includes("rank") || label.includes("top") ? "python_analysis"
+        : label.includes("excel") || label.includes("formula") || label.includes("sheet") ? "ai_action_formula"
+        : "ask_ai";
+    }
+    const context = `User question: "${originalQuestion}". User selected action: "${normalized.label}".`;
+    setMessages(prev => prev.map(msg => (
+      msg.ts === messageTs ? { ...msg, selectedOptionId: normalized.id || normalized.label } : msg
+    )));
+    addMessage("user", normalized.label);
+    await sendMessage(originalQuestion, context, round, normalized, true);
   };
 
   // ── Chart insertion from SmartRoute chart_result ──────────────────────────
@@ -1416,7 +1439,7 @@ export default function App() {
               <span style={{ fontSize: 32 }}>✦</span>
               <span style={{ fontSize: 13, fontWeight: 600, color: brand.text }}>Ask me anything about your data</span>
               <span style={{ fontSize: 11, color: brand.textLight, textAlign: "center", maxWidth: "26ch", lineHeight: 1.6 }}>
-                Select a range in Excel, then type your question below. I'll figure out the best action automatically.
+                Select a range in Excel, then type your question below. I'll suggest action choices before running anything.
               </span>
             </div>
           )}
@@ -1457,29 +1480,44 @@ export default function App() {
                 </div>
 
                 {/* HITL clarification option buttons */}
-                {msg.type === "clarification" && msg.options?.length > 0 && (
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 2, maxWidth: "88%" }}>
-                    {msg.options.map((opt, oi) => (
-                      <button
-                        key={oi}
-                        className="xc-option-btn"
-                        disabled={loading}
-                        onClick={() => handleClarification(opt, msg.originalQuestion, msg.round)}
-                        style={{
-                          padding: "5px 10px",
-                          borderRadius: 20,
-                          border: `1px solid ${brand.teal}`,
-                          background: "transparent",
-                          color: brand.teal,
-                          fontSize: 11.5,
-                          cursor: "pointer",
-                          transition: "all .15s",
-                          fontWeight: 500,
-                        }}
-                      >
-                        {opt}
-                      </button>
-                    ))}
+                {msg.type === "clarification" && (msg.actionOptions?.length > 0 || msg.options?.length > 0) && (
+                  <div style={{ display: "grid", gap: 6, marginTop: 2, maxWidth: "88%", width: "88%" }}>
+                    {(msg.actionOptions?.length > 0
+                      ? msg.actionOptions
+                      : msg.options.map(opt => ({ id: opt, label: opt, mode: null }))
+                    ).map((opt, oi) => {
+                      const selected = msg.selectedOptionId === (opt.id || opt.label);
+                      return (
+                        <button
+                          key={opt.id || oi}
+                          className="xc-option-btn"
+                          disabled={loading || Boolean(msg.selectedOptionId)}
+                          onClick={() => handleClarification(opt, msg.originalQuestion, msg.round, msg.ts)}
+                          style={{
+                            padding: "8px 10px",
+                            borderRadius: 8,
+                            border: `1px solid ${selected ? brand.teal : brand.border}`,
+                            background: selected ? brand.tealFaint : brand.white,
+                            color: selected ? brand.tealDark : brand.textPrimary,
+                            fontSize: 11.5,
+                            cursor: loading || msg.selectedOptionId ? "not-allowed" : "pointer",
+                            transition: "all .15s",
+                            fontWeight: 600,
+                            textAlign: "left",
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: 2,
+                          }}
+                        >
+                          <span>{opt.label}</span>
+                          {opt.description && (
+                            <span style={{ color: brand.textMuted, fontSize: 10.5, fontWeight: 400, lineHeight: 1.35 }}>
+                              {opt.description}
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
                   </div>
                 )}
               </div>

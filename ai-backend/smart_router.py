@@ -1,15 +1,10 @@
 # aibackend/smart_router.py
 """
-Smart Intent Router — single LLM call that classifies every user query
-into one of 5 execution modes and returns a confidence score.
+Smart HITL router.
 
-Modes
------
-ask_ai              Open-ended insight / trend / general question → /analyze
-ai_chart            User wants a visualisation                    → /ai_chart
-ai_action_formula   Simple groupby aggregation, summary table     → /action (formula path)
-python_analysis     Complex: top-N, pareto, cumulative%, growth   → /action (python path)
-audit               Data quality, missing values, duplicates      → /ai_audit
+The router uses the LLM to decide which action choices to show before any
+Excel operation runs. The selected option's mode is later used by /smart_route
+to dispatch the execution handler.
 """
 from __future__ import annotations
 
@@ -23,70 +18,69 @@ import pandas as pd
 logger = logging.getLogger(__name__)
 
 
-CONFIDENCE_AUTO_EXECUTE   = 0.80   # execute silently
-CONFIDENCE_SHOW_RATIONALE = 0.55   # execute but show "I interpreted this as…"
-# Below 0.55 → surface HITL clarification options
-
+CONFIDENCE_AUTO_EXECUTE = 0.80
+CONFIDENCE_SHOW_RATIONALE = 0.55
 
 MODES = ["ask_ai", "ai_chart", "ai_action_formula", "python_analysis", "audit"]
 
 MODE_DESCRIPTIONS = """
-AVAILABLE MODES — choose exactly ONE:
+AVAILABLE MODES - choose from these only:
 
 1. ask_ai
-   Use for: open-ended questions, general insight, trend explanations, "why did X happen", comparisons, forecasts.
-   Examples: "Why did sales drop in Q3?", "What are the key trends?", "Summarise the data for me"
+   Use for: open-ended insight, trends, explanations, comparisons, forecasts, concise answers in the task pane.
 
 2. ai_chart
-   Use for: any request to visualise data — chart, graph, plot, dashboard, visual.
-   Examples: "Show month on month sales", "Plot revenue by region as a bar chart", "Give me a pie chart of top products"
+   Use for: visualizing data as a chart, graph, plot, dashboard, or month-over-month view.
 
 3. ai_action_formula
-   Use for: simple groupby aggregations that can be expressed as SUMIFS/AVERAGEIFS/COUNTIFS.
-   The result is written into Excel as native formulas.
-   Examples: "Sum sales by region", "Average price per category", "Count orders by status"
+   Use for: simple groupby aggregations written into Excel as native formulas.
 
 4. python_analysis
-   Use for: ANYTHING requiring multi-step computation beyond a single aggregation:
-   - Pareto / 80-20 / cumulative percentage
-   - Top-N or Bottom-N items WITH a threshold or filter
-   - Percentile-based filtering ("items generating 80% of revenue")
-   - Running totals, growth rates, period-over-period change
-   - Ranking + secondary metric calculation
-   Examples: "Which item types generate 80% of revenue?",
-             "Top 5 products by sales with average margin",
-             "Show cumulative revenue contribution"
+   Use for: top-N, bottom-N, Pareto, cumulative percent, growth, ranking, or multi-step computed analysis.
 
 5. audit
-   Use for: data quality, validation, cleaning tasks.
-   Examples: "Check for missing values", "Find duplicates", "Validate data quality", "Audit the dataset"
+   Use for: data quality, missing values, duplicates, validation, cleaning, and audit tasks.
 """
 
 
 @dataclass
+class ActionOption:
+    id: str
+    label: str
+    mode: str
+    description: Optional[str] = None
+
+
+@dataclass
 class RouterResult:
-    mode: str                          # one of MODES
-    confidence: float                  # 0.0 – 1.0
-    rationale: str                     # human-readable reason
-    needs_clarification: bool          # True if confidence < threshold
-    clarification_question: Optional[str] = None   # what to ask the user
-    clarification_options: List[str] = field(default_factory=list)  # clickable option labels
-    metadata: Dict[str, Any] = field(default_factory=dict)          # hints for downstream handlers
+    mode: str
+    confidence: float
+    rationale: str
+    needs_clarification: bool
+    clarification_question: Optional[str] = None
+    clarification_options: List[str] = field(default_factory=list)
+    action_options: List[ActionOption] = field(default_factory=list)
+    metadata: Dict[str, Any] = field(default_factory=dict)
 
 
 def _build_system_prompt() -> str:
-    return f"""You are the Smart Intent Router for an AI-powered Excel assistant.
-Your ONLY job is to classify the user's question into ONE execution mode and return a confidence score.
+    return f"""You are the Human-in-the-Loop action planner for an AI-powered Excel assistant.
+Your job is to parse the user's request and decide what clickable action choices to show BEFORE anything executes.
 
 {MODE_DESCRIPTIONS}
 
-RULES:
-- Return ONLY valid JSON — no markdown, no explanation outside the JSON.
-- "mode" MUST be one of: {MODES}
-- "confidence" MUST be a float between 0.0 and 1.0
-- "clarification_question" — if you are unsure (confidence < 0.55), write a SHORT question to ask the user
-- "clarification_options" — 2 to 4 short option labels matching the ambiguous modes (e.g. ["Show a chart", "Give me a table", "Text analysis"])
-- If confidence >= 0.55, set clarification_question to null and clarification_options to []
+Rules:
+- Return ONLY valid JSON, no markdown.
+- Always generate 2 to 4 action_options.
+- Put the most relevant option first.
+- Each option must be a meaningfully different outcome.
+- Each option must include id, label, mode, and description.
+- id must be stable snake_case.
+- label must be short, imperative, and button-friendly.
+- mode must be one of: {MODES}
+- Include a concise rationale for your top recommended mode.
+- Include a short clarification_question that asks the user to pick an action.
+- Set clarification_options to the action option labels for backward compatibility.
 """
 
 
@@ -95,118 +89,185 @@ def _build_user_prompt(question: str, df: pd.DataFrame, context: Optional[str]) 
     numeric_cols = df.select_dtypes(include="number").columns.tolist()
     categorical_cols = df.select_dtypes(include=["object", "category"]).columns.tolist()
     sample = df.head(3).to_csv(index=False)
-
     context_section = f"\n\nPREVIOUS CONTEXT:\n{context}" if context else ""
 
     return f"""USER QUESTION: {question}
 
 DATA PROFILE:
-- Shape: {df.shape[0]} rows × {df.shape[1]} columns
+- Shape: {df.shape[0]} rows x {df.shape[1]} columns
 - All columns: {columns}
 - Numeric columns: {numeric_cols}
 - Categorical columns: {categorical_cols}
 - Sample (first 3 rows):
 {sample}{context_section}
 
-Respond ONLY with this JSON structure:
+Respond ONLY with this JSON shape:
 {{
-  "mode": "one_of_the_five_modes",
-  "confidence": 0.0_to_1.0,
-  "rationale": "1-2 sentence explanation of why you chose this mode",
-  "clarification_question": "question to ask user OR null",
-  "clarification_options": ["Option A", "Option B"] // or []
+  "mode": "one_of_the_modes",
+  "confidence": 0.0,
+  "rationale": "Why the first option is most relevant",
+  "clarification_question": "How would you like me to handle this?",
+  "clarification_options": ["Option label", "Option label"],
+  "action_options": [
+    {{
+      "id": "stable_snake_case_id",
+      "label": "Short clickable label",
+      "mode": "one_of_the_modes",
+      "description": "One short sentence explaining what will happen."
+    }}
+  ]
 }}"""
 
 
 def route(question: str, df: pd.DataFrame, context: Optional[str] = None) -> RouterResult:
-    """
-    Classify the user's question into an execution mode.
-
-    Parameters
-    ----------
-    question : str
-        The raw user question.
-    df : pd.DataFrame
-        The data currently selected in Excel.
-    context : str, optional
-        Prior conversation context or user clarification answer.
-
-    Returns
-    -------
-    RouterResult
-    """
     try:
         from llm_config import get_openai_client, get_model
         client = get_openai_client()
     except Exception as e:
-        logger.warning(f"[SmartRouter] Could not get LLM client, using keyword fallback. Error: {e}")
+        logger.warning("[SmartRouter] Could not get LLM client, using fallback. Error: %s", e)
         return _fallback_route(question)
 
     if client is None:
         return _fallback_route(question)
 
-    system_prompt = _build_system_prompt()
-    user_prompt = _build_user_prompt(question, df, context)
-
-    logger.info(f"[SmartRouter] Routing question: '{question[:80]}...'")
+    logger.info("[SmartRouter] Planning HITL options for question: '%s...'", question[:80])
 
     try:
         resp = client.chat.completions.create(
             model=get_model(),
             messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt},
+                {"role": "system", "content": _build_system_prompt()},
+                {"role": "user", "content": _build_user_prompt(question, df, context)},
             ],
             response_format={"type": "json_object"},
         )
         raw = (resp.choices[0].message.content or "").strip()
-        logger.info(f"[SmartRouter] LLM raw response: {raw[:300]}")
+        logger.info("[SmartRouter] LLM raw response: %s", raw[:300])
         data = json.loads(raw)
     except Exception as e:
-        logger.error(f"[SmartRouter] LLM call failed: {e}")
+        logger.error("[SmartRouter] LLM option planning failed: %s", e)
         return _fallback_route(question)
 
     mode = data.get("mode", "ask_ai")
     if mode not in MODES:
-        logger.warning(f"[SmartRouter] Unknown mode '{mode}' — defaulting to ask_ai")
+        logger.warning("[SmartRouter] Unknown mode '%s', defaulting to ask_ai", mode)
         mode = "ask_ai"
 
-    confidence = float(data.get("confidence", 0.5))
-    rationale = data.get("rationale", "")
-    clarification_question = data.get("clarification_question")
-    clarification_options = data.get("clarification_options", [])
+    confidence = _safe_float(data.get("confidence"), 0.5)
+    rationale = str(data.get("rationale") or "")
+    action_options = _normalize_action_options(data.get("action_options"), mode)
+    clarification_question = str(data.get("clarification_question") or "How would you like me to handle this?")
+    clarification_options = data.get("clarification_options") or [opt.label for opt in action_options]
 
-    needs_clarification = confidence < CONFIDENCE_SHOW_RATIONALE
-
-    result = RouterResult(
+    return RouterResult(
         mode=mode,
         confidence=confidence,
         rationale=rationale,
-        needs_clarification=needs_clarification,
-        clarification_question=clarification_question if needs_clarification else None,
-        clarification_options=clarification_options if needs_clarification else [],
+        needs_clarification=True,
+        clarification_question=clarification_question,
+        clarification_options=[str(opt) for opt in clarification_options][:4],
+        action_options=action_options,
     )
-    logger.info(f"[SmartRouter] → mode={mode}, confidence={confidence:.2f}, hitl={needs_clarification}")
-    return result
+
+
+def _normalize_action_options(raw_options: Any, preferred_mode: str) -> List[ActionOption]:
+    options: List[ActionOption] = []
+    seen_ids = set()
+
+    if isinstance(raw_options, list):
+        for raw in raw_options:
+            if not isinstance(raw, dict):
+                continue
+            mode = raw.get("mode")
+            label = str(raw.get("label") or "").strip()
+            if mode not in MODES or not label:
+                continue
+
+            opt_id = _slugify(str(raw.get("id") or label))
+            if opt_id in seen_ids:
+                continue
+            seen_ids.add(opt_id)
+            options.append(ActionOption(
+                id=opt_id,
+                label=label[:80],
+                mode=mode,
+                description=str(raw.get("description") or "").strip()[:160] or None,
+            ))
+
+    if len(options) < 2:
+        return _fallback_options(preferred_mode, "")
+
+    return options[:4]
 
 
 def _fallback_route(question: str) -> RouterResult:
-    """Keyword-based fallback when LLM is unavailable."""
     q = question.lower()
-    if any(k in q for k in ["chart", "plot", "graph", "visual", "show me"]):
+    if any(k in q for k in ["chart", "plot", "graph", "visual", "show me", "month"]):
         mode, conf = "ai_chart", 0.70
     elif any(k in q for k in ["audit", "quality", "missing", "duplicate", "validate"]):
         mode, conf = "audit", 0.75
-    elif any(k in q for k in ["80%", "pareto", "80-20", "top ", "bottom ", "cumulative", "running total"]):
+    elif any(k in q for k in ["80%", "pareto", "80-20", "top ", "bottom ", "cumulative", "running total", "rank"]):
         mode, conf = "python_analysis", 0.72
     elif any(k in q for k in ["sum", "total", "count", "average", "by region", "by category", "group"]):
         mode, conf = "ai_action_formula", 0.65
     else:
         mode, conf = "ask_ai", 0.60
 
+    options = _fallback_options(mode, q)
     return RouterResult(
         mode=mode,
         confidence=conf,
-        rationale=f"Auto-detected mode: {mode} (keyword match)",
-        needs_clarification=False,
+        rationale=f"Fallback action plan led with {mode}.",
+        needs_clarification=True,
+        clarification_question="How would you like me to handle this?",
+        clarification_options=[opt.label for opt in options],
+        action_options=options,
     )
+
+
+def _fallback_options(preferred_mode: str, question: str) -> List[ActionOption]:
+    base = {
+        "ask_ai": ActionOption("summary_ui", "View summary in add-in", "ask_ai", "Show a concise answer in the task pane."),
+        "ai_chart": ActionOption("generate_chart", "Generate chart", "ai_chart", "Create the most suitable chart in Excel."),
+        "ai_action_formula": ActionOption("write_formula_summary", "Write formula summary", "ai_action_formula", "Create a worksheet with native Excel formulas."),
+        "python_analysis": ActionOption("create_ranked_analysis", "Create ranked analysis", "python_analysis", "Run a computed analysis and write results to Excel."),
+        "audit": ActionOption("audit_data_quality", "Audit data quality", "audit", "Check missing values, duplicates, and data quality issues."),
+    }
+
+    ordered_modes = [preferred_mode]
+    if any(k in question for k in ["chart", "plot", "graph", "visual", "show me", "month"]):
+        ordered_modes += ["ai_chart", "ask_ai", "ai_action_formula"]
+    elif any(k in question for k in ["top ", "bottom ", "rank", "80%", "pareto"]):
+        ordered_modes += ["python_analysis", "ai_chart", "ask_ai"]
+    elif any(k in question for k in ["audit", "quality", "missing", "duplicate"]):
+        ordered_modes += ["audit", "ask_ai", "ai_action_formula"]
+    else:
+        ordered_modes += ["ask_ai", "ai_chart", "ai_action_formula"]
+
+    deduped = []
+    for mode in ordered_modes:
+        if mode in base and mode not in deduped:
+            deduped.append(mode)
+
+    return [base[mode] for mode in deduped[:3]]
+
+
+def _slugify(value: str) -> str:
+    chars = []
+    previous_underscore = False
+    for ch in value.lower():
+        if ch.isalnum():
+            chars.append(ch)
+            previous_underscore = False
+        elif not previous_underscore:
+            chars.append("_")
+            previous_underscore = True
+    return "".join(chars).strip("_")[:48] or "action"
+
+
+def _safe_float(value: Any, fallback: float) -> float:
+    try:
+        numeric = float(value)
+    except (TypeError, ValueError):
+        return fallback
+    return max(0.0, min(1.0, numeric))

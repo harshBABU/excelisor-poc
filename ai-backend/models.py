@@ -178,6 +178,15 @@ class SmartRouteRequest(LoggableModel):
     question: str = Field(..., description="User's natural language question")
     context: Optional[str] = Field(None, description="Prior conversation turn / clarification answer")
     clarification_round: int = Field(default=0, description="How many HITL rounds have occurred (max 2)")
+    selected_action_id: Optional[str] = Field(None, description="HITL option id selected by the user")
+    selected_mode: Optional[str] = Field(None, description="Execution mode attached to the selected HITL option")
+
+
+class HitlActionOption(LoggableModel):
+    id: str = Field(..., description="Stable action id for the option")
+    label: str = Field(..., description="Clickable option label")
+    mode: str = Field(..., description="Execution mode to run if selected")
+    description: Optional[str] = Field(None, description="Short context for the user")
 
 
 class SmartRouteResponse(LoggableModel):
@@ -195,7 +204,8 @@ class SmartRouteResponse(LoggableModel):
     needs_clarification: bool = Field(default=False)
     clarification_question: Optional[str] = None
     clarification_options: List[str] = Field(default_factory=list)
+    action_options: List[HitlActionOption] = Field(default_factory=list)
     # If mode resolved without clarification, downstream results are embedded:
     action_result: Optional[ActionResponse] = None
     chart_result: Optional[ChartSuggestResponse] = None
-    analyze_result: Optional[AnalyzeResponse] = None
+    analyze_result: Optional[AnalyzeResponse] = None

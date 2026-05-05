@@ -5,6 +5,7 @@ import os
 from typing import Any, Dict, List
 import pandas as pd
 from contextlib import asynccontextmanager
+from types import SimpleNamespace
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -295,9 +296,25 @@ def smart_route(req: SmartRouteRequest) -> SmartRouteResponse:
     from smart_router import route as sr_route, CONFIDENCE_SHOW_RATIONALE
 
     df = table_to_dataframe(req.table)
-    logger.info(f"[/smart_route] question='{req.question[:80]}' round={req.clarification_round}")
+    logger.info(
+        "[/smart_route] question='%s' selected_action=%s selected_mode=%s",
+        req.question[:80],
+        req.selected_action_id,
+        req.selected_mode,
+    )
 
-    result = sr_route(req.question, df, context=req.context)
+    if req.selected_mode:
+        result = SimpleNamespace(
+            mode=req.selected_mode,
+            confidence=1.0,
+            rationale=f"User selected action: {req.selected_action_id or req.selected_mode}",
+            needs_clarification=False,
+            clarification_question=None,
+            clarification_options=[],
+            action_options=[],
+        )
+    else:
+        result = sr_route(req.question, df, context=req.context)
 
     # Force execution after max clarification rounds to avoid infinite loops
     force_execute = req.clarification_round >= MAX_CLARIFICATION_ROUNDS
@@ -308,7 +325,7 @@ def smart_route(req: SmartRouteRequest) -> SmartRouteResponse:
         result.clarification_options = []
 
     # If we still need clarification, return early with HITL payload
-    if result.needs_clarification:
+    if result.needs_clarification and not req.selected_mode:
         return SmartRouteResponse(
             mode=result.mode,
             confidence=result.confidence,
@@ -316,7 +333,25 @@ def smart_route(req: SmartRouteRequest) -> SmartRouteResponse:
             needs_clarification=True,
             clarification_question=result.clarification_question,
             clarification_options=result.clarification_options,
+            action_options=[
+                {
+                    "id": opt.id,
+                    "label": opt.label,
+                    "mode": opt.mode,
+                    "description": opt.description,
+                }
+                for opt in result.action_options
+            ],
         )
+
+    if req.selected_mode:
+        if req.selected_mode not in ("ask_ai", "ai_chart", "ai_action_formula", "python_analysis", "audit"):
+            raise HTTPException(status_code=400, detail=f"Unsupported selected_mode: {req.selected_mode}")
+        result.mode = req.selected_mode
+        result.needs_clarification = False
+        result.clarification_question = None
+        result.clarification_options = []
+        result.action_options = []
 
     # ── Dispatch to sub-handler ──────────────────────────────────────────────
     show_rationale = CONFIDENCE_SHOW_RATIONALE <= result.confidence < 0.80
