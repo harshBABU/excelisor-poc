@@ -7527,463 +7527,783 @@ if (false) // removed by dead control flow
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": function() { return /* binding */ App; }
+/* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* provided dependency */ var Promise = __webpack_require__(/*! es6-promise */ "./node_modules/es6-promise/dist/es6-promise.js")["Promise"];
-function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t.return || t.return(); } finally { if (u) throw o; } } }; }
+function _regeneratorValues(e) { if (null != e) { var t = e["function" == typeof Symbol && Symbol.iterator || "@@iterator"], r = 0; if (t) return t.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) return { next: function next() { return e && r >= e.length && (e = void 0), { value: e && e[r++], done: !e }; } }; } throw new TypeError(_typeof(e) + " is not iterable"); }
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regenerator() { /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/babel/babel/blob/main/packages/babel-helpers/LICENSE */ var e, t, r = "function" == typeof Symbol ? Symbol : {}, n = r.iterator || "@@iterator", o = r.toStringTag || "@@toStringTag"; function i(r, n, o, i) { var c = n && n.prototype instanceof Generator ? n : Generator, u = Object.create(c.prototype); return _regeneratorDefine2(u, "_invoke", function (r, n, o) { var i, c, u, f = 0, p = o || [], y = !1, G = { p: 0, n: 0, v: e, a: d, f: d.bind(e, 4), d: function d(t, r) { return i = t, c = 0, u = e, G.n = r, a; } }; function d(r, n) { for (c = r, u = n, t = 0; !y && f && !o && t < p.length; t++) { var o, i = p[t], d = G.p, l = i[2]; r > 3 ? (o = l === n) && (u = i[(c = i[4]) ? 5 : (c = 3, 3)], i[4] = i[5] = e) : i[0] <= d && ((o = r < 2 && d < i[1]) ? (c = 0, G.v = n, G.n = i[1]) : d < l && (o = r < 3 || i[0] > n || n > l) && (i[4] = r, i[5] = n, G.n = l, c = 0)); } if (o || r > 1) return a; throw y = !0, n; } return function (o, p, l) { if (f > 1) throw TypeError("Generator is already running"); for (y && 1 === p && d(p, l), c = p, u = l; (t = c < 2 ? e : u) || !y;) { i || (c ? c < 3 ? (c > 1 && (G.n = -1), d(c, u)) : G.n = u : G.v = u); try { if (f = 2, i) { if (c || (o = "next"), t = i[o]) { if (!(t = t.call(i, u))) throw TypeError("iterator result is not an object"); if (!t.done) return t; u = t.value, c < 2 && (c = 0); } else 1 === c && (t = i.return) && t.call(i), c < 2 && (u = TypeError("The iterator does not provide a '" + o + "' method"), c = 1); i = e; } else if ((t = (y = G.n < 0) ? u : r.call(n, G)) !== a) break; } catch (t) { i = e, c = 1, u = t; } finally { f = 1; } } return { value: t, done: y }; }; }(r, o, i), !0), u; } var a = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} t = Object.getPrototypeOf; var c = [][n] ? t(t([][n]())) : (_regeneratorDefine2(t = {}, n, function () { return this; }), t), u = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(c); function f(e) { return Object.setPrototypeOf ? Object.setPrototypeOf(e, GeneratorFunctionPrototype) : (e.__proto__ = GeneratorFunctionPrototype, _regeneratorDefine2(e, o, "GeneratorFunction")), e.prototype = Object.create(u), e; } return GeneratorFunction.prototype = GeneratorFunctionPrototype, _regeneratorDefine2(u, "constructor", GeneratorFunctionPrototype), _regeneratorDefine2(GeneratorFunctionPrototype, "constructor", GeneratorFunction), GeneratorFunction.displayName = "GeneratorFunction", _regeneratorDefine2(GeneratorFunctionPrototype, o, "GeneratorFunction"), _regeneratorDefine2(u), _regeneratorDefine2(u, o, "Generator"), _regeneratorDefine2(u, n, function () { return this; }), _regeneratorDefine2(u, "toString", function () { return "[object Generator]"; }), (_regenerator = function _regenerator() { return { w: i, m: f }; })(); }
 function _regeneratorDefine2(e, r, n, t) { var i = Object.defineProperty; try { i({}, "", {}); } catch (e) { i = 0; } _regeneratorDefine2 = function _regeneratorDefine(e, r, n, t) { function o(r, n) { _regeneratorDefine2(e, r, function (e) { return this._invoke(r, n, e); }); } r ? i ? i(e, r, { value: n, enumerable: !t, configurable: !t, writable: !t }) : e[r] = n : (o("next", 0), o("throw", 1), o("return", 2)); }, _regeneratorDefine2(e, r, n, t); }
-function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
-function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
-function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function _createForOfIteratorHelper(r, e) { var t = "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (!t) { if (Array.isArray(r) || (t = _unsupportedIterableToArray(r)) || e && r && "number" == typeof r.length) { t && (r = t); var _n = 0, F = function F() {}; return { s: F, n: function n() { return _n >= r.length ? { done: !0 } : { done: !1, value: r[_n++] }; }, e: function e(r) { throw r; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var o, a = !0, u = !1; return { s: function s() { t = t.call(r); }, n: function n() { var r = t.next(); return a = r.done, r; }, e: function e(r) { u = !0, o = r; }, f: function f() { try { a || null == t.return || t.return(); } finally { if (u) throw o; } } }; }
+function _toConsumableArray(r) { return _arrayWithoutHoles(r) || _iterableToArray(r) || _unsupportedIterableToArray(r) || _nonIterableSpread(); }
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _iterableToArray(r) { if ("undefined" != typeof Symbol && null != r[Symbol.iterator] || null != r["@@iterator"]) return Array.from(r); }
+function _arrayWithoutHoles(r) { if (Array.isArray(r)) return _arrayLikeToArray(r); }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 
 var apiBase = "http://localhost:8000";
+function getExcelData() {
+  return _getExcelData.apply(this, arguments);
+} // ─── Inline styles as a JS object tree ───────────────────────────────────────
+function _getExcelData() {
+  _getExcelData = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee16() {
+    return _regenerator().w(function (_context18) {
+      while (1) switch (_context18.n) {
+        case 0:
+          _context18.n = 1;
+          return Excel.run(/*#__PURE__*/function () {
+            var _ref24 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee15(context) {
+              var range;
+              return _regenerator().w(function (_context17) {
+                while (1) switch (_context17.n) {
+                  case 0:
+                    range = context.workbook.getSelectedRange();
+                    range.load(["values", "address", "rowCount", "columnCount"]);
+                    _context17.n = 1;
+                    return context.sync();
+                  case 1:
+                    return _context17.a(2, {
+                      values: range.values || [],
+                      address: range.address || "",
+                      metadata: {
+                        originalRows: range.rowCount || 0,
+                        originalColumns: range.columnCount || 0
+                      }
+                    });
+                }
+              }, _callee15);
+            }));
+            return function (_x20) {
+              return _ref24.apply(this, arguments);
+            };
+          }());
+        case 1:
+          return _context18.a(2, _context18.v);
+      }
+    }, _callee16);
+  }));
+  return _getExcelData.apply(this, arguments);
+}
+var brand = {
+  navy: "#08121C",
+  navyMid: "#142536",
+  navyLight: "#1E3450",
+  teal: "#2BC99C",
+  tealDark: "#1A9E7A",
+  tealFaint: "#E5F6F1",
+  tealBorder: "rgba(43,201,156,0.25)",
+  offWhite: "#F6F8FA",
+  white: "#FFFFFF",
+  border: "#D3DEE8",
+  borderFocus: "#2BC99C",
+  textPrimary: "#0D1E2E",
+  textMuted: "#6B8399",
+  textLight: "#9FB3C8",
+  errorBg: "#FFF2F2",
+  errorText: "#C0392B",
+  successBg: "#EDFAF4",
+  successText: "#1A7A56"
+};
+var MODELS = [{
+  value: "gpt-5-nano",
+  label: "GPT-5 Nano",
+  hint: "Fast · Low cost"
+}, {
+  value: "gpt-4o-mini",
+  label: "GPT-4o Mini",
+  hint: "Balanced"
+}, {
+  value: "gpt-4o",
+  label: "GPT-4o",
+  hint: "Most capable"
+}, {
+  value: "gpt-5-mini",
+  label: "GPT-5 Mini",
+  hint: "Fast + smart"
+}, {
+  value: "gpt-5.4-nano",
+  label: "GPT-5.4 Nano",
+  hint: "Experimental"
+}];
+var globalCss = "\n  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=Syne:wght@600;700&display=swap');\n\n  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }\n\n  body { background: ".concat(brand.offWhite, "; font-family: 'DM Sans', sans-serif; }\n\n  @keyframes spin {\n    to { transform: rotate(360deg); }\n  }\n  @keyframes fadeUp {\n    from { opacity: 0; transform: translateY(6px); }\n    to   { opacity: 1; transform: translateY(0); }\n  }\n  @keyframes pulse {\n    0%, 100% { opacity: 1; }\n    50%       { opacity: 0.5; }\n  }\n\n  .xc-input:focus {\n    border-color: ").concat(brand.teal, " !important;\n    box-shadow: 0 0 0 3px rgba(43,201,156,0.15) !important;\n    outline: none;\n  }\n  .xc-input::placeholder { color: ").concat(brand.textLight, "; }\n\n  .xc-btn-primary:hover:not(:disabled)  { background: ").concat(brand.tealDark, " !important; box-shadow: 0 6px 18px rgba(43,201,156,0.35) !important; transform: translateY(-1px); }\n  .xc-btn-secondary:hover:not(:disabled){ background: ").concat(brand.navyLight, " !important; }\n  .xc-btn-ghost:hover:not(:disabled)    { border-color: ").concat(brand.teal, " !important; color: ").concat(brand.teal, " !important; }\n  .xc-btn-danger:hover:not(:disabled)   { background: #fdecea !important; color: ").concat(brand.errorText, " !important; border-color: #f5c6c2 !important; }\n\n  .xc-btn-primary:active:not(:disabled),\n  .xc-btn-secondary:active:not(:disabled),\n  .xc-btn-ghost:active:not(:disabled)   { transform: translateY(0px) !important; }\n  .xc-btn:disabled { opacity: 0.45; cursor: not-allowed; }\n\n  .settings-panel-enter { animation: fadeUp 0.2s ease both; }\n\n  .action-btn:hover:not(:disabled) .action-btn-icon { transform: scale(1.15); }\n\n  select.xc-input option { background: ").concat(brand.white, "; color: ").concat(brand.textPrimary, "; }\n\n  .xc-output-text a { color: ").concat(brand.teal, "; }\n\n  /* Scrollbar */\n  .xc-output-area::-webkit-scrollbar { width: 4px; }\n  .xc-output-area::-webkit-scrollbar-track { background: transparent; }\n  .xc-output-area::-webkit-scrollbar-thumb { background: ").concat(brand.border, "; border-radius: 99px; }\n");
+
+// ─── Small reusable UI atoms ──────────────────────────────────────────────────
+
+var Spinner = function Spinner() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      width: 15,
+      height: 15,
+      borderRadius: "50%",
+      border: "2px solid ".concat(brand.tealFaint),
+      borderTopColor: brand.teal,
+      animation: "spin 0.7s linear infinite",
+      flexShrink: 0
+    }
+  });
+};
+var Label = function Label(_ref) {
+  var children = _ref.children,
+    _ref$style = _ref.style,
+    style = _ref$style === void 0 ? {} : _ref$style;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: _objectSpread({
+      fontSize: 10,
+      fontWeight: 600,
+      letterSpacing: "0.1em",
+      textTransform: "uppercase",
+      color: brand.textMuted,
+      marginBottom: 6
+    }, style)
+  }, children);
+};
+var isMonthlyChartIntent = function isMonthlyChartIntent(normalized) {
+  var userQuestion = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "";
+  var haystack = [userQuestion, normalized === null || normalized === void 0 ? void 0 : normalized.chartTitle].concat(_toConsumableArray(Array.isArray(normalized === null || normalized === void 0 ? void 0 : normalized.categoryColumn) ? normalized.categoryColumn : [normalized === null || normalized === void 0 ? void 0 : normalized.categoryColumn])).filter(Boolean).join(" ").toLowerCase();
+  return /\b(month on month|month-on-month|monthly|mom)\b/.test(haystack);
+};
+var excelSerialToDate = function excelSerialToDate(value) {
+  var numeric = typeof value === "number" ? value : Number(value);
+  if (!Number.isFinite(numeric) || numeric < 20000 || numeric > 60000) return null;
+  return new Date(Date.UTC(1899, 11, 30) + numeric * 24 * 60 * 60 * 1000);
+};
+var parseDateLikeValue = function parseDateLikeValue(value) {
+  if (value instanceof Date && !Number.isNaN(value.getTime())) return value;
+  var serialDate = excelSerialToDate(value);
+  if (serialDate) return serialDate;
+  var parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
+};
+var formatMonthKey = function formatMonthKey(date) {
+  var year = date.getUTCFullYear();
+  var month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  return "".concat(year, "-").concat(month);
+};
+var chooseDateColumn = function chooseDateColumn(headers, cat, normalized) {
+  var preferred = [].concat(_toConsumableArray(Array.isArray(cat) ? cat : []), _toConsumableArray(Array.isArray(normalized === null || normalized === void 0 ? void 0 : normalized.categoryColumn) ? normalized.categoryColumn : [normalized === null || normalized === void 0 ? void 0 : normalized.categoryColumn]), ["OrderDate", "Date", "DeliveryDate"]).filter(Boolean);
+  var _iterator = _createForOfIteratorHelper(preferred),
+    _step;
+  try {
+    var _loop = function _loop() {
+        var name = _step.value;
+        var match = headers.find(function (h) {
+          return h.toLowerCase() === String(name).toLowerCase();
+        });
+        if (match && /(date|time|month|year)/i.test(match)) return {
+          v: match
+        };
+      },
+      _ret;
+    for (_iterator.s(); !(_step = _iterator.n()).done;) {
+      _ret = _loop();
+      if (_ret) return _ret.v;
+    }
+  } catch (err) {
+    _iterator.e(err);
+  } finally {
+    _iterator.f();
+  }
+  return headers.find(function (h) {
+    return /(orderdate|date|deliverydate|time)/i.test(h);
+  }) || null;
+};
+var buildMonthlyChartRows = function buildMonthlyChartRows(values, headers, normalized, cat, vals, aggregationsRaw) {
+  var userQuestion = arguments.length > 6 && arguments[6] !== undefined ? arguments[6] : "";
+  if (!isMonthlyChartIntent(normalized, userQuestion)) return null;
+  var dateCol = chooseDateColumn(headers, cat, normalized);
+  var valueCol = (vals || []).find(function (v) {
+    return headers.includes(v);
+  }) || headers.find(function (h) {
+    return /total.*price|sales|revenue|amount/i.test(h);
+  });
+  if (!dateCol || !valueCol) return null;
+  var dateIdx = headers.indexOf(dateCol);
+  var valueIdx = headers.indexOf(valueCol);
+  if (dateIdx === -1 || valueIdx === -1) return null;
+  var totals = new Map();
+  for (var i = 1; i < values.length; i++) {
+    var row = values[i];
+    if (!row) continue;
+    var date = parseDateLikeValue(row[dateIdx]);
+    var amount = Number(row[valueIdx]);
+    if (!date || !Number.isFinite(amount)) continue;
+    var key = formatMonthKey(date);
+    totals.set(key, (totals.get(key) || 0) + amount);
+  }
+  var rows = Array.from(totals.entries()).sort(function (_ref2, _ref3) {
+    var _ref4 = _slicedToArray(_ref2, 1),
+      a = _ref4[0];
+    var _ref5 = _slicedToArray(_ref3, 1),
+      b = _ref5[0];
+    return a.localeCompare(b);
+  }).map(function (_ref6) {
+    var _ref7 = _slicedToArray(_ref6, 2),
+      month = _ref7[0],
+      total = _ref7[1];
+    return [month, total];
+  });
+  if (rows.length === 0) return null;
+  var aggregation = (aggregationsRaw === null || aggregationsRaw === void 0 ? void 0 : aggregationsRaw[0]) || "SUM";
+  return {
+    headers: ["Month", "".concat(valueCol, " (").concat(aggregation, ")")],
+    rows: rows
+  };
+};
+var StatusBadge = function StatusBadge(_ref8) {
+  var loading = _ref8.loading,
+    output = _ref8.output;
+  if (!output && !loading) return null;
+  var isError = output === null || output === void 0 ? void 0 : output.startsWith("❌");
+  var isSuccess = output === null || output === void 0 ? void 0 : output.startsWith("✅");
+  var bg = isError ? brand.errorBg : isSuccess ? brand.successBg : brand.tealFaint;
+  var color = isError ? brand.errorText : isSuccess ? brand.successText : brand.tealDark;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      display: "flex",
+      alignItems: "flex-start",
+      gap: 8,
+      padding: "10px 12px",
+      borderRadius: 8,
+      background: bg,
+      color: color,
+      fontSize: 12,
+      lineHeight: 1.5,
+      animation: "fadeUp 0.2s ease"
+    }
+  }, loading && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Spinner, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    style: {
+      flex: 1
+    }
+  }, output));
+};
+
+// ─── Main component ───────────────────────────────────────────────────────────
 function App() {
-  var _dataInfo$originalRow, _dataInfo$sampledRows;
+  var _MODELS$find;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState2 = _slicedToArray(_useState, 2),
-    question = _useState2[0],
-    setQuestion = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    input = _useState2[0],
+    setInput = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState4 = _slicedToArray(_useState3, 2),
-    output = _useState4[0],
-    setOutput = _useState4[1];
+    messages = _useState4[0],
+    setMessages = _useState4[1]; // chat history
   var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState6 = _slicedToArray(_useState5, 2),
     loading = _useState6[0],
     setLoading = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState8 = _slicedToArray(_useState7, 2),
-    operationProgress = _useState8[0],
-    setOperationProgress = _useState8[1];
+    clarificationRound = _useState8[0],
+    setClarificationRound = _useState8[1];
   var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState0 = _slicedToArray(_useState9, 2),
-    dataInfo = _useState0[0],
-    setDataInfo = _useState0[1];
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    lastContext = _useState0[0],
+    setLastContext = _useState0[1]; // accumulated HITL context
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(localStorage.getItem("openai_api_key") || ""),
     _useState10 = _slicedToArray(_useState1, 2),
-    lastIntent = _useState10[0],
-    setLastIntent = _useState10[1];
+    apiKey = _useState10[0],
+    setApiKey = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(localStorage.getItem("openai_model") || "gpt-5-nano"),
+    _useState12 = _slicedToArray(_useState11, 2),
+    selectedModel = _useState12[0],
+    setSelectedModel = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState14 = _slicedToArray(_useState13, 2),
+    settingsOpen = _useState14[0],
+    setSettingsOpen = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+    _useState16 = _slicedToArray(_useState15, 2),
+    keyError = _useState16[0],
+    setKeyError = _useState16[1];
 
-  // Enhanced Excel data reading with intelligent sampling
-  function getExcelData() {
-    return _getExcelData.apply(this, arguments);
-  }
-  function _getExcelData() {
-    _getExcelData = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6() {
-      var sampleOnly,
-        _args6 = arguments;
-      return _regenerator().w(function (_context6) {
-        while (1) switch (_context6.n) {
-          case 0:
-            sampleOnly = _args6.length > 0 && _args6[0] !== undefined ? _args6[0] : false;
-            return _context6.a(2, Excel.run(/*#__PURE__*/function () {
-              var _ref5 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5(context) {
-                var range, fullData, dataSize, processedData;
-                return _regenerator().w(function (_context5) {
-                  while (1) switch (_context5.n) {
-                    case 0:
-                      range = context.workbook.getSelectedRange();
-                      range.load("values, address, rowCount, columnCount");
-                      _context5.n = 1;
-                      return context.sync();
-                    case 1:
-                      fullData = range.values;
-                      dataSize = {
-                        rows: range.rowCount,
-                        columns: range.columnCount,
-                        address: range.address
-                      }; // For large datasets, implement client-side sampling if needed
-                      processedData = fullData;
-                      if (dataSize.rows > 50000 && sampleOnly) {
-                        // Client-side sampling for very large selections
-                        processedData = intelligentSample(fullData, 10000);
-                      }
-                      return _context5.a(2, {
-                        values: processedData,
-                        address: range.address,
-                        metadata: {
-                          originalRows: dataSize.rows,
-                          originalColumns: dataSize.columns,
-                          sampledRows: processedData.length,
-                          isSampled: processedData.length !== dataSize.rows
-                        }
-                      });
-                  }
-                }, _callee5);
-              }));
-              return function (_x2) {
-                return _ref5.apply(this, arguments);
-              };
-            }()));
-        }
-      }, _callee6);
-    }));
-    return _getExcelData.apply(this, arguments);
-  }
-  function intelligentSample(data, maxSample) {
-    if (data.length <= maxSample) return data;
-    var sample = [];
-    var step = Math.floor(data.length / maxSample);
+  // Refs — must be declared before any early returns (Rules of Hooks)
+  var chatFeed = react__WEBPACK_IMPORTED_MODULE_0___default().useRef(null);
+  react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
+    if (chatFeed.current) chatFeed.current.scrollTop = chatFeed.current.scrollHeight;
+  }, [messages, loading]);
+  var modeIcon = {
+    ask_ai: "🔍",
+    ai_chart: "📊",
+    ai_action_formula: "🧮",
+    python_analysis: "🐍",
+    audit: "✅"
+  };
 
-    // Include header if available
-    if (data.length > 0) sample.push(data[0]);
+  // Internal helpers
+  var addMessage = function addMessage(role, content) {
+    var extra = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+    return setMessages(function (prev) {
+      return [].concat(_toConsumableArray(prev), [_objectSpread({
+        role: role,
+        content: content,
+        ts: Date.now()
+      }, extra)]);
+    });
+  };
 
-    // Systematic sampling
-    for (var i = step; i < data.length && sample.length < maxSample; i += step) {
-      sample.push(data[i]);
-    }
-    return sample;
-  }
-
-  // Enhanced intent classification
-  var classifyIntent = /*#__PURE__*/function () {
-    var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee() {
-      var _yield$getExcelData, values, address, metadata, resp, intent, _t;
+  // ── API helpers ─────────────────────────────────────────────────────────────
+  var callJson = /*#__PURE__*/function () {
+    var _ref9 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(path, body) {
+      var reqHeaders, resp, t;
       return _regenerator().w(function (_context) {
-        while (1) switch (_context.p = _context.n) {
+        while (1) switch (_context.n) {
           case 0:
-            setLoading(true);
-            setOutput("Analyzing your request...");
-            _context.p = 1;
-            _context.n = 2;
-            return getExcelData(true);
-          case 2:
-            _yield$getExcelData = _context.v;
-            values = _yield$getExcelData.values;
-            address = _yield$getExcelData.address;
-            metadata = _yield$getExcelData.metadata;
-            setDataInfo(metadata);
-            _context.n = 3;
-            return fetch("".concat(apiBase, "/classify_intent"), {
+            reqHeaders = {
+              "Content-Type": "application/json"
+            };
+            if (apiKey) reqHeaders["Authorization"] = "Bearer ".concat(apiKey);
+            if (selectedModel) reqHeaders["X-OpenAI-Model"] = selectedModel;
+            _context.n = 1;
+            return fetch("".concat(apiBase).concat(path), {
               method: "POST",
-              headers: {
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                table: values,
-                address: address,
-                question: question,
-                metadata: metadata
-              })
+              headers: reqHeaders,
+              body: JSON.stringify(body)
             });
-          case 3:
+          case 1:
             resp = _context.v;
+            if (resp.ok) {
+              _context.n = 3;
+              break;
+            }
+            _context.n = 2;
+            return resp.text();
+          case 2:
+            t = _context.v;
+            throw new Error("HTTP ".concat(resp.status, ": ").concat(t));
+          case 3:
             _context.n = 4;
             return resp.json();
           case 4:
-            intent = _context.v;
-            setLastIntent(intent);
-            setOutput("\n        Analysis Classification:\n        \u2022 Action Type: ".concat(intent.action_type.toUpperCase(), "\n        \u2022 Confidence: ").concat((intent.confidence * 100).toFixed(1), "%\n        \u2022 Reasoning: ").concat(intent.reasoning, "\n        ").concat(intent.suggested_operations ? "\u2022 Suggested Operations: ".concat(intent.suggested_operations.join(', ')) : '', "\n        \n        Dataset Info: ").concat(metadata.originalRows.toLocaleString(), " rows, ").concat(metadata.originalColumns, " columns\n        ").concat(metadata.isSampled ? "(Analyzed sample of ".concat(metadata.sampledRows.toLocaleString(), " rows)") : '', "\n      "));
-            _context.n = 6;
-            break;
-          case 5:
-            _context.p = 5;
-            _t = _context.v;
-            setOutput("Classification error: ".concat(_t.message));
-          case 6:
-            _context.p = 6;
-            setLoading(false);
-            return _context.f(6);
-          case 7:
-            return _context.a(2);
+            return _context.a(2, _context.v);
         }
-      }, _callee, null, [[1, 5, 6, 7]]);
+      }, _callee);
     }));
-    return function classifyIntent() {
-      return _ref.apply(this, arguments);
+    return function callJson(_x, _x2) {
+      return _ref9.apply(this, arguments);
     };
   }();
 
-  // Enhanced AI analysis with intelligent data handling
-  var askAI = /*#__PURE__*/function () {
-    var _ref2 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2() {
-      var _yield$getExcelData2, values, address, metadata, resp, _yield$resp$json, answer, _t2;
+  // ── Smart Route (primary chat handler) ───────────────────────────────────
+  var sendMessage = /*#__PURE__*/function () {
+    var _ref0 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee2(userText) {
+      var contextOverride,
+        roundOverride,
+        text,
+        _yield$getExcelData,
+        values,
+        address,
+        round,
+        context,
+        res,
+        nextRound,
+        showRationale,
+        rationalePrefix,
+        _res$action_result$wo,
+        _res$action_result$wo2,
+        _args2 = arguments,
+        _t;
       return _regenerator().w(function (_context2) {
         while (1) switch (_context2.p = _context2.n) {
           case 0:
-            setLoading(true);
-            setOutput("Analyzing your data...");
-            setOperationProgress({
-              stage: "reading_data",
-              progress: 20
-            });
-            _context2.p = 1;
-            _context2.n = 2;
-            return getExcelData();
-          case 2:
-            _yield$getExcelData2 = _context2.v;
-            values = _yield$getExcelData2.values;
-            address = _yield$getExcelData2.address;
-            metadata = _yield$getExcelData2.metadata;
-            setDataInfo(metadata);
-            setOperationProgress({
-              stage: "analyzing",
-              progress: 50
-            });
-            _context2.n = 3;
-            return fetch("".concat(apiBase, "/analyze"), {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                table: values,
-                address: address,
-                question: question,
-                metadata: metadata
-              })
-            });
-          case 3:
-            resp = _context2.v;
-            _context2.n = 4;
-            return resp.json();
-          case 4:
-            _yield$resp$json = _context2.v;
-            answer = _yield$resp$json.answer;
-            setOperationProgress({
-              stage: "complete",
-              progress: 100
-            });
-            setOutput(answer);
-            _context2.n = 6;
-            break;
-          case 5:
-            _context2.p = 5;
-            _t2 = _context2.v;
-            setOutput("Analysis error: ".concat(_t2.message));
-          case 6:
-            _context2.p = 6;
-            setLoading(false);
-            setTimeout(function () {
-              return setOperationProgress(null);
-            }, 2000);
-            return _context2.f(6);
-          case 7:
-            return _context2.a(2);
-        }
-      }, _callee2, null, [[1, 5, 6, 7]]);
-    }));
-    return function askAI() {
-      return _ref2.apply(this, arguments);
-    };
-  }();
-
-  // Enhanced Excel actions with progress tracking
-  var executeExcelAction = /*#__PURE__*/function () {
-    var _ref3 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3() {
-      var _actionResult$metadat, _actionResult$workshe, _actionResult$formula, _yield$getExcelData3, values, address, metadata, resp, actionResult, _t3;
-      return _regenerator().w(function (_context3) {
-        while (1) switch (_context3.p = _context3.n) {
-          case 0:
-            setLoading(true);
-            setOutput("Preparing Excel operations...");
-            setOperationProgress({
-              stage: "initializing",
-              progress: 10
-            });
-            _context3.p = 1;
-            _context3.n = 2;
-            return getExcelData();
-          case 2:
-            _yield$getExcelData3 = _context3.v;
-            values = _yield$getExcelData3.values;
-            address = _yield$getExcelData3.address;
-            metadata = _yield$getExcelData3.metadata;
-            setDataInfo(metadata);
-            setOperationProgress({
-              stage: "processing",
-              progress: 30
-            });
-            setOutput("Processing your request with AI...");
-            _context3.n = 3;
-            return fetch("".concat(apiBase, "/action"), {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                table: values,
-                address: address,
-                question: question,
-                metadata: metadata
-              })
-            });
-          case 3:
-            resp = _context3.v;
-            _context3.n = 4;
-            return resp.json();
-          case 4:
-            actionResult = _context3.v;
-            if (actionResult.success) {
-              _context3.n = 5;
+            contextOverride = _args2.length > 1 && _args2[1] !== undefined ? _args2[1] : null;
+            roundOverride = _args2.length > 2 && _args2[2] !== undefined ? _args2[2] : null;
+            text = (userText || input).trim();
+            if (!(!text || loading)) {
+              _context2.n = 1;
               break;
             }
-            setOutput("Action failed: ".concat(actionResult.errors.join(", ")));
-            return _context3.a(2);
+            return _context2.a(2);
+          case 1:
+            // Add the user bubble to the chat
+            addMessage("user", text);
+            setInput("");
+            setLoading(true);
+            _context2.p = 2;
+            _context2.n = 3;
+            return getExcelData();
+          case 3:
+            _yield$getExcelData = _context2.v;
+            values = _yield$getExcelData.values;
+            address = _yield$getExcelData.address;
+            round = roundOverride !== null ? roundOverride : clarificationRound;
+            context = contextOverride !== null ? contextOverride : lastContext;
+            _context2.n = 4;
+            return callJson("/smart_route", {
+              table: values,
+              address: address,
+              question: text,
+              context: context,
+              clarification_round: round
+            });
+          case 4:
+            res = _context2.v;
+            if (!res.needs_clarification) {
+              _context2.n = 5;
+              break;
+            }
+            nextRound = round + 1;
+            setClarificationRound(nextRound);
+            setLastContext(text); // carry question forward as context
+            addMessage("assistant", res.clarification_question || "Could you clarify what you're looking for?", {
+              type: "clarification",
+              options: res.clarification_options || [],
+              round: nextRound,
+              originalQuestion: text
+            });
+            return _context2.a(2);
           case 5:
-            setOperationProgress({
-              stage: "creating_worksheets",
-              progress: 60
-            });
-            setOutput("Creating worksheets and formulas...");
+            // Successful routing — reset HITL state
+            setClarificationRound(0);
+            setLastContext(null);
 
-            // Execute Excel operations
-            _context3.n = 6;
-            return executeExcelOperations(actionResult);
-          case 6:
-            setOperationProgress({
-              stage: "complete",
-              progress: 100
+            // Only show rationale prefix if confidence is borderline AND it's a meaningful LLM explanation
+            showRationale = res.confidence >= 0.55 && res.confidence < 0.80 && res.rationale && !res.rationale.startsWith("Auto-detected");
+            rationalePrefix = showRationale ? "\uD83D\uDCA1 *".concat(res.rationale, "*\n\n") : ""; // ── Chart result ────────────────────────────────────────────────────────
+            if (!(res.mode === "ai_chart" && res.chart_result)) {
+              _context2.n = 7;
+              break;
+            }
+            addMessage("assistant", "\uD83D\uDCCA ".concat(res.chart_result.inferences || "Chart ready — generating…"), {
+              type: "chart_pending",
+              chartData: res.chart_result,
+              address: address,
+              values: values
             });
-            setOutput("\n        Excel operations completed successfully!\n        \n        Operations performed: ".concat(((_actionResult$metadat = actionResult.metadata) === null || _actionResult$metadat === void 0 || (_actionResult$metadat = _actionResult$metadat.operations_performed) === null || _actionResult$metadat === void 0 ? void 0 : _actionResult$metadat.join(", ")) || "Analysis", "\n        Worksheets created: ").concat(((_actionResult$workshe = actionResult.worksheets) === null || _actionResult$workshe === void 0 ? void 0 : _actionResult$workshe.length) || 0, "\n        Formulas generated: ").concat(((_actionResult$formula = actionResult.formulas) === null || _actionResult$formula === void 0 ? void 0 : _actionResult$formula.length) || 0, "\n        \n        Check the new worksheets for your analysis results.\n      "));
-            _context3.n = 8;
-            break;
+            // Execute the chart insertion using existing aiChart logic
+            _context2.n = 6;
+            return _insertChartFromResult(res.chart_result, values, address);
+          case 6:
+            return _context2.a(2);
           case 7:
-            _context3.p = 7;
-            _t3 = _context3.v;
-            setOutput("Excel action error: ".concat(_t3.message));
+            if (!(res.mode === "audit" && res.action_result)) {
+              _context2.n = 9;
+              break;
+            }
+            if (!(((_res$action_result$wo = res.action_result.worksheets) === null || _res$action_result$wo === void 0 ? void 0 : _res$action_result$wo.length) > 0)) {
+              _context2.n = 8;
+              break;
+            }
+            _context2.n = 8;
+            return renderWorksheets(res.action_result.worksheets);
           case 8:
-            _context3.p = 8;
-            setLoading(false);
-            setTimeout(function () {
-              return setOperationProgress(null);
-            }, 3000);
-            return _context3.f(8);
+            addMessage("assistant", res.action_result.message || "✅ Audit complete.", {
+              type: "action"
+            });
+            return _context2.a(2);
           case 9:
-            return _context3.a(2);
+            if (!res.action_result) {
+              _context2.n = 11;
+              break;
+            }
+            if (!(((_res$action_result$wo2 = res.action_result.worksheets) === null || _res$action_result$wo2 === void 0 ? void 0 : _res$action_result$wo2.length) > 0)) {
+              _context2.n = 10;
+              break;
+            }
+            _context2.n = 10;
+            return renderWorksheets(res.action_result.worksheets);
+          case 10:
+            addMessage("assistant", rationalePrefix + (res.action_result.message || "✅ Done."), {
+              type: "action",
+              mode: res.mode
+            });
+            return _context2.a(2);
+          case 11:
+            if (!res.analyze_result) {
+              _context2.n = 12;
+              break;
+            }
+            addMessage("assistant", res.analyze_result.answer || "No answer.", {
+              type: "text"
+            });
+            return _context2.a(2);
+          case 12:
+            addMessage("assistant", "✅ Done.", {
+              type: "text"
+            });
+            _context2.n = 14;
+            break;
+          case 13:
+            _context2.p = 13;
+            _t = _context2.v;
+            addMessage("assistant", "\u274C Error: ".concat(_t.message), {
+              type: "error"
+            });
+          case 14:
+            _context2.p = 14;
+            setLoading(false);
+            return _context2.f(14);
+          case 15:
+            return _context2.a(2);
         }
-      }, _callee3, null, [[1, 7, 8, 9]]);
+      }, _callee2, null, [[2, 13, 14, 15]]);
     }));
-    return function executeExcelAction() {
-      return _ref3.apply(this, arguments);
+    return function sendMessage(_x3) {
+      return _ref0.apply(this, arguments);
     };
   }();
 
-  // Execute complex Excel operations
-  function executeExcelOperations(_x) {
-    return _executeExcelOperations.apply(this, arguments);
-  } // Data quality audit
-  function _executeExcelOperations() {
-    _executeExcelOperations = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee8(actionResult) {
-      return _regenerator().w(function (_context8) {
-        while (1) switch (_context8.n) {
+  // ── HITL option selection ───────────────────────────────────────────────────
+  var handleClarification = /*#__PURE__*/function () {
+    var _ref1 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee3(option, originalQuestion, round) {
+      var context;
+      return _regenerator().w(function (_context3) {
+        while (1) switch (_context3.n) {
           case 0:
-            _context8.n = 1;
+            context = "User question: \"".concat(originalQuestion, "\". User clarified: \"").concat(option, "\".");
+            addMessage("user", option);
+            _context3.n = 1;
+            return sendMessage(originalQuestion, context, round);
+          case 1:
+            return _context3.a(2);
+        }
+      }, _callee3);
+    }));
+    return function handleClarification(_x4, _x5, _x6) {
+      return _ref1.apply(this, arguments);
+    };
+  }();
+
+  // ── Chart insertion from SmartRoute chart_result ──────────────────────────
+  var _insertChartFromResult = /*#__PURE__*/function () {
+    var _ref10 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4(chartData, values, address) {
+      var suggest;
+      return _regenerator().w(function (_context4) {
+        while (1) switch (_context4.n) {
+          case 0:
+            // Synthesise a normalized suggest object matching what aiChart() expects
+            suggest = {
+              chartType: chartData.chartType,
+              chartTitle: chartData.chartTitle,
+              categoryColumn: chartData.categoryColumn,
+              valueColumns: chartData.valueColumns,
+              aggregations: chartData.aggregations,
+              inferences: chartData.inferences,
+              use_llm: true
+            }; // Re-use the aiChart path; it reads `suggest` and `values` from closure-equivalent args.
+            // We call the internal chart render function with pre-fetched data.
+            _context4.n = 1;
+            return _renderChart(suggest, values, address);
+          case 1:
+            return _context4.a(2);
+        }
+      }, _callee4);
+    }));
+    return function _insertChartFromResult(_x7, _x8, _x9) {
+      return _ref10.apply(this, arguments);
+    };
+  }();
+
+  // ── Legacy handlers (kept for direct use if needed) ──────────────────────
+  var askAI = /*#__PURE__*/function () {
+    var _ref11 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee5() {
+      return _regenerator().w(function (_context5) {
+        while (1) switch (_context5.n) {
+          case 0:
+            if (!input.trim()) {
+              _context5.n = 1;
+              break;
+            }
+            _context5.n = 1;
+            return sendMessage(input.trim());
+          case 1:
+            return _context5.a(2);
+        }
+      }, _callee5);
+    }));
+    return function askAI() {
+      return _ref11.apply(this, arguments);
+    };
+  }();
+  var checkData = /*#__PURE__*/function () {
+    var _ref12 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee6() {
+      var _res$worksheets, _yield$getExcelData2, values, address, res, _t2;
+      return _regenerator().w(function (_context6) {
+        while (1) switch (_context6.p = _context6.n) {
+          case 0:
+            _context6.p = 0;
+            setLoading(true);
+            setOutput("🔍 Checking data quality…");
+            _context6.n = 1;
+            return getExcelData();
+          case 1:
+            _yield$getExcelData2 = _context6.v;
+            values = _yield$getExcelData2.values;
+            address = _yield$getExcelData2.address;
+            _context6.n = 2;
+            return callJson("/ai_audit", {
+              table: values,
+              address: address
+            });
+          case 2:
+            res = _context6.v;
+            setOutput(res.audit || "No audit message.");
+            if (!(((_res$worksheets = res.worksheets) === null || _res$worksheets === void 0 ? void 0 : _res$worksheets.length) > 0)) {
+              _context6.n = 3;
+              break;
+            }
+            _context6.n = 3;
+            return renderWorksheets(res.worksheets);
+          case 3:
+            setOutput(res.message || "✅ Audit complete.");
+            _context6.n = 5;
+            break;
+          case 4:
+            _context6.p = 4;
+            _t2 = _context6.v;
+            setOutput("\u274C Error: ".concat(_t2.message));
+          case 5:
+            _context6.p = 5;
+            setLoading(false);
+            return _context6.f(5);
+          case 6:
+            return _context6.a(2);
+        }
+      }, _callee6, null, [[0, 4, 5, 6]]);
+    }));
+    return function checkData() {
+      return _ref12.apply(this, arguments);
+    };
+  }();
+  var aiChart = /*#__PURE__*/function () {
+    var _ref13 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee9() {
+      var _ref14, _suggest$categoryColu, _yield$getExcelData3, values, address, suggest, normalized, catRaw, valsRaw, headers, headerSet, lowerMap, catMapped, valsMapped, cat, vals, aggregationsRaw, mapAggregation, aggregations, _t13;
+      return _regenerator().w(function (_context0) {
+        while (1) switch (_context0.p = _context0.n) {
+          case 0:
+            _context0.p = 0;
+            setLoading(true);
+            setOutput("📊 Recommending chart and inserting…");
+            _context0.n = 1;
+            return Promise.resolve();
+          case 1:
+            _context0.n = 2;
+            return getExcelData();
+          case 2:
+            _yield$getExcelData3 = _context0.v;
+            values = _yield$getExcelData3.values;
+            address = _yield$getExcelData3.address;
+            _context0.n = 3;
+            return callJson("/ai_chart", {
+              table: values,
+              address: address,
+              question: question,
+              use_llm: useLLM
+            });
+          case 3:
+            suggest = _context0.v;
+            if (!(!suggest || _typeof(suggest) !== "object")) {
+              _context0.n = 4;
+              break;
+            }
+            throw new Error("Invalid /ai_chart response.");
+          case 4:
+            normalized = {
+              chartType: suggest.chartType,
+              chartTitle: suggest.chartTitle,
+              categoryColumn: (_ref14 = (_suggest$categoryColu = suggest.categoryColumn) !== null && _suggest$categoryColu !== void 0 ? _suggest$categoryColu : suggest.category_column) !== null && _ref14 !== void 0 ? _ref14 : null,
+              valueColumns: Array.isArray(suggest.valueColumns) ? suggest.valueColumns : Array.isArray(suggest.value_columns) ? suggest.value_columns : []
+            };
+            catRaw = typeof normalized.categoryColumn === "string" ? normalized.categoryColumn.trim() : null;
+            valsRaw = normalized.valueColumns.filter(function (v) {
+              return typeof v === "string";
+            }).map(function (v) {
+              return v.trim();
+            });
+            headers = Array.isArray(values) && values[0] ? values[0].map(function (h) {
+              return String(h).trim();
+            }) : [];
+            headerSet = new Set(headers);
+            lowerMap = new Map(headers.map(function (h) {
+              return [h.toLowerCase(), h];
+            }));
+            catMapped = Array.isArray(normalized.categoryColumn) ? normalized.categoryColumn.map(function (c) {
+              return typeof c === "string" ? lowerMap.get(c.toLowerCase()) : null;
+            }).filter(Boolean) : typeof normalized.categoryColumn === "string" ? [lowerMap.get(normalized.categoryColumn.toLowerCase())] : [];
+            valsMapped = valsRaw.map(function (v) {
+              return lowerMap.get(v.toLowerCase());
+            }).filter(Boolean);
+            cat = catMapped.length > 0 && catMapped.every(function (c) {
+              return headerSet.has(c);
+            }) ? catMapped : null;
+            vals = valsMapped.filter(function (v) {
+              return headerSet.has(v);
+            });
+            aggregationsRaw = Array.isArray(suggest.aggregations) ? suggest.aggregations : Array.isArray(suggest.value_aggregations) ? suggest.value_aggregations : [];
+            mapAggregation = function mapAggregation(aggString) {
+              var aggMap = {
+                SUM: Excel.AggregationFunction.sum,
+                COUNT: Excel.AggregationFunction.count,
+                AVERAGE: Excel.AggregationFunction.average,
+                MIN: Excel.AggregationFunction.min,
+                MAX: Excel.AggregationFunction.max,
+                STDEV: Excel.AggregationFunction.standardDeviation,
+                VAR: Excel.AggregationFunction.variance
+              };
+              return aggMap[aggString] || Excel.AggregationFunction.sum;
+            };
+            aggregations = vals.map(function (_, i) {
+              return mapAggregation(aggregationsRaw[i] || "SUM");
+            });
+            _context0.n = 5;
             return Excel.run(/*#__PURE__*/function () {
-              var _ref6 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7(context) {
-                var workbook, _iterator, _step, sheetConfig, worksheet, _i, _Object$entries, _Object$entries$_i, key, layoutItem, cell, _iterator3, _step3, formulaItem, formulaCell, errorRule, errorCell, _iterator4, _step4, condFormat, range, conditionalFormat, activeSheet, _iterator2, _step2, _formulaItem, _formulaCell;
-                return _regenerator().w(function (_context7) {
-                  while (1) switch (_context7.n) {
+              var _ref15 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee8(context) {
+                var wb, ws, addressA1, parts, sheetName, dataRange, type, catCols, catTitles, _iterator2, _step2, c, idx, cRange, valCols, valTitles, _iterator3, _step3, v, _idx, vRange, optimizeChartSeries, newSheetName, newSheet, uniquePivotName, pivotTable, pivotDestination, _iterator4, _step4, category, i, h, field, _h, _field, pivotRange, pivotChart, seedRange, chart, _seedRange, _chart, _newSheetName, dashboardSheet, titleCell, inferencesText, inferenceCell, inferenceRange, monthlyChartRows, tableRows, targetBoundRange, _chart2, catIndices, seenKeys, uniqueRows, _loop2, _i2, MONTH_ORDER, toMonthNum, isYear, catAddrs, valAddrs, getNativeFormula, activeColOffset, headerRow, headerRange, r, keyParts, dataRow, ci, vi, aggType, formula, _tableRows, _targetBoundRange, _chart3, dashSeedRange, _chart4, _t5, _t6, _t7, _t8, _t9, _t0, _t1, _t10, _t11, _t12;
+                return _regenerator().w(function (_context9) {
+                  while (1) switch (_context9.p = _context9.n) {
                     case 0:
-                      workbook = context.workbook; // Create worksheets
-                      _iterator = _createForOfIteratorHelper(actionResult.worksheets || []);
-                      try {
-                        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-                          sheetConfig = _step.value;
-                          worksheet = workbook.worksheets.add(sheetConfig.name); // Set up layout
-                          if (sheetConfig.layout) {
-                            for (_i = 0, _Object$entries = Object.entries(sheetConfig.layout); _i < _Object$entries.length; _i++) {
-                              _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2), key = _Object$entries$_i[0], layoutItem = _Object$entries$_i[1];
-                              if (layoutItem.cell && layoutItem.value) {
-                                cell = worksheet.getRange(layoutItem.cell);
-                                cell.values = [[layoutItem.value]];
-
-                                // Apply basic styling
-                                if (layoutItem.style === "title") {
-                                  cell.format.font.size = 16;
-                                  cell.format.font.bold = true;
-                                } else if (layoutItem.style === "header") {
-                                  cell.format.font.bold = true;
-                                  cell.format.fill.color = "#D3D3D3";
-                                }
-                              }
-                            }
-                          }
-
-                          // Add formulas
-                          _iterator3 = _createForOfIteratorHelper(sheetConfig.formulas || []);
-                          try {
-                            for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-                              formulaItem = _step3.value;
-                              try {
-                                formulaCell = worksheet.getRange(formulaItem.cell);
-                                formulaCell.formulas = [[formulaItem.formula]];
-
-                                // Add error handling - highlight cells with formula errors in red
-                                if (formulaItem.error_handling) {
-                                  errorRule = worksheet.conditionalFormats.add(Excel.ConditionalFormatType.custom);
-                                  errorRule.customFormat.condition = "ISERROR(".concat(formulaItem.cell, ")");
-                                  errorRule.customFormat.format.fill.color = "#FFB6C1";
-                                }
-                              } catch (formulaError) {
-                                // If formula fails, put it as text with red background
-                                errorCell = worksheet.getRange(formulaItem.cell);
-                                errorCell.values = [[formulaItem.formula]];
-                                errorCell.format.fill.color = "#FFB6C1";
-
-                                // Add comment with error details
-                                errorCell.comment.text = "Formula error: ".concat(formulaError.message);
-                              }
-                            }
-
-                            // Apply conditional formatting
-                          } catch (err) {
-                            _iterator3.e(err);
-                          } finally {
-                            _iterator3.f();
-                          }
-                          _iterator4 = _createForOfIteratorHelper(sheetConfig.conditional_formatting || []);
-                          try {
-                            for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
-                              condFormat = _step4.value;
-                              try {
-                                range = worksheet.getRange(condFormat.range);
-                                conditionalFormat = range.conditionalFormats.add(Excel.ConditionalFormatType[condFormat.rule] || Excel.ConditionalFormatType.colorScale);
-                                if (condFormat.style === "green_gradient") {
-                                  conditionalFormat.colorScale.criteria = {
-                                    minimum: {
-                                      formula: null,
-                                      type: Excel.ConditionalFormatColorCriterionType.lowestValue
-                                    },
-                                    maximum: {
-                                      formula: null,
-                                      type: Excel.ConditionalFormatColorCriterionType.highestValue
-                                    }
-                                  };
-                                }
-                              } catch (formatError) {
-                                console.warn("Conditional formatting failed:", formatError);
-                              }
-                            }
-                          } catch (err) {
-                            _iterator4.e(err);
-                          } finally {
-                            _iterator4.f();
-                          }
-                        }
-
-                        // Add standalone formulas
-                      } catch (err) {
-                        _iterator.e(err);
-                      } finally {
-                        _iterator.f();
+                      wb = context.workbook;
+                      ws = wb.worksheets.getActiveWorksheet();
+                      addressA1 = address || "";
+                      if (!(typeof addressA1 === "string" && addressA1.includes("!"))) {
+                        _context9.n = 4;
+                        break;
                       }
-                      activeSheet = workbook.worksheets.getActiveWorksheet();
-                      _iterator2 = _createForOfIteratorHelper(actionResult.formulas || []);
+                      parts = addressA1.split("!");
+                      sheetName = parts[0];
+                      if (sheetName.startsWith("'") && sheetName.endsWith("'")) sheetName = sheetName.substring(1, sheetName.length - 1);
+                      addressA1 = parts.slice(1).join("!");
+                      _context9.p = 1;
+                      ws = wb.worksheets.getItem(sheetName);
+                      _context9.n = 2;
+                      return context.sync();
+                    case 2:
+                      _context9.n = 4;
+                      break;
+                    case 3:
+                      _context9.p = 3;
+                      _t5 = _context9.v;
+                      ws = wb.worksheets.getActiveWorksheet();
+                    case 4:
+                      dataRange = ws.getRange(addressA1);
+                      type = normalized.chartType || "ColumnClustered";
+                      catCols = [];
+                      catTitles = [];
+                      _iterator2 = _createForOfIteratorHelper(cat || []);
                       try {
                         for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-                          _formulaItem = _step2.value;
-                          try {
-                            _formulaCell = activeSheet.getRange(_formulaItem.cell);
-                            _formulaCell.formulas = [[_formulaItem.formula]];
-                          } catch (formulaError) {
-                            console.warn("Formula creation failed:", formulaError);
+                          c = _step2.value;
+                          idx = headers.indexOf(c);
+                          if (idx !== -1) {
+                            cRange = dataRange.getColumn(idx).getOffsetRange(1, 0).getResizedRange(-1, 0);
+                            cRange.load("address");
+                            catCols.push(cRange);
+                            catTitles.push(c);
                           }
                         }
                       } catch (err) {
@@ -7991,261 +8311,1912 @@ function App() {
                       } finally {
                         _iterator2.f();
                       }
-                      _context7.n = 1;
+                      valCols = [];
+                      valTitles = [];
+                      _iterator3 = _createForOfIteratorHelper(vals || []);
+                      try {
+                        for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+                          v = _step3.value;
+                          _idx = headers.indexOf(v);
+                          if (_idx !== -1) {
+                            vRange = dataRange.getColumn(_idx).getOffsetRange(1, 0).getResizedRange(-1, 0);
+                            vRange.load("address");
+                            valCols.push(vRange);
+                            valTitles.push(v);
+                          }
+                        }
+                      } catch (err) {
+                        _iterator3.e(err);
+                      } finally {
+                        _iterator3.f();
+                      }
+                      _context9.n = 5;
                       return context.sync();
-                    case 1:
-                      return _context7.a(2);
+                    case 5:
+                      optimizeChartSeries = /*#__PURE__*/function () {
+                        var _ref16 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee7(chart) {
+                          var i, catIdx, catRange, _i, vIdx, valRange, newSeries, _t3, _t4;
+                          return _regenerator().w(function (_context7) {
+                            while (1) switch (_context7.p = _context7.n) {
+                              case 0:
+                                if (!(!vals || vals.length === 0)) {
+                                  _context7.n = 1;
+                                  break;
+                                }
+                                return _context7.a(2);
+                              case 1:
+                                _context7.p = 1;
+                                chart.series.load("count, items");
+                                _context7.n = 2;
+                                return context.sync();
+                              case 2:
+                                for (i = chart.series.items.length - 1; i >= 0; i--) chart.series.items[i].delete();
+                                if (!(cat && cat.length > 0)) {
+                                  _context7.n = 6;
+                                  break;
+                                }
+                                catIdx = headers.indexOf(cat[0]);
+                                if (!(catIdx !== -1)) {
+                                  _context7.n = 6;
+                                  break;
+                                }
+                                _context7.p = 3;
+                                catRange = dataRange.getColumn(catIdx).getOffsetRange(1, 0).getResizedRange(-1, 0);
+                                chart.axes.categoryAxis.setCategoryNames(catRange);
+                                _context7.n = 4;
+                                return context.sync();
+                              case 4:
+                                _context7.n = 6;
+                                break;
+                              case 5:
+                                _context7.p = 5;
+                                _t3 = _context7.v;
+                              case 6:
+                                for (_i = 0; _i < vals.length; _i++) {
+                                  vIdx = headers.indexOf(vals[_i]);
+                                  if (vIdx !== -1) {
+                                    valRange = dataRange.getColumn(vIdx).getOffsetRange(1, 0).getResizedRange(-1, 0);
+                                    newSeries = chart.series.add(vals[_i]);
+                                    newSeries.setValues(valRange);
+                                  }
+                                }
+                                _context7.n = 7;
+                                return context.sync();
+                              case 7:
+                                _context7.n = 9;
+                                break;
+                              case 8:
+                                _context7.p = 8;
+                                _t4 = _context7.v;
+                              case 9:
+                                return _context7.a(2);
+                            }
+                          }, _callee7, null, [[3, 5], [1, 8]]);
+                        }));
+                        return function optimizeChartSeries(_x1) {
+                          return _ref16.apply(this, arguments);
+                        };
+                      }();
+                      if (!usePivot) {
+                        _context9.n = 38;
+                        break;
+                      }
+                      newSheetName = "AI_Chart_".concat(Date.now());
+                      _context9.p = 6;
+                      newSheet = wb.worksheets.add(newSheetName);
+                      _context9.n = 7;
+                      return context.sync();
+                    case 7:
+                      _context9.n = 9;
+                      break;
+                    case 8:
+                      _context9.p = 8;
+                      _t6 = _context9.v;
+                      newSheet = ws;
+                    case 9:
+                      uniquePivotName = "AI_PivotTable_".concat(Date.now());
+                      _context9.p = 10;
+                      dataRange.load(["address", "rowCount", "columnCount"]);
+                      _context9.n = 11;
+                      return context.sync();
+                    case 11:
+                      pivotDestination = newSheet.getRange("A1");
+                      pivotTable = newSheet.pivotTables.add(uniquePivotName, dataRange, pivotDestination);
+                      _context9.n = 12;
+                      return context.sync();
+                    case 12:
+                      pivotTable.load("name");
+                      _context9.n = 13;
+                      return context.sync();
+                    case 13:
+                      if (!(Array.isArray(cat) && cat.length > 0)) {
+                        _context9.n = 14;
+                        break;
+                      }
+                      _iterator4 = _createForOfIteratorHelper(cat);
+                      try {
+                        for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
+                          category = _step4.value;
+                          try {
+                            pivotTable.rowHierarchies.add(pivotTable.hierarchies.getItem(category));
+                          } catch (_unused5) {}
+                        }
+                      } catch (err) {
+                        _iterator4.e(err);
+                      } finally {
+                        _iterator4.f();
+                      }
+                      _context9.n = 14;
+                      return context.sync();
+                    case 14:
+                      if (!(vals.length > 0)) {
+                        _context9.n = 23;
+                        break;
+                      }
+                      i = 0;
+                    case 15:
+                      if (!(i < vals.length)) {
+                        _context9.n = 23;
+                        break;
+                      }
+                      _context9.p = 16;
+                      h = pivotTable.hierarchies.getItem(vals[i]);
+                      field = pivotTable.dataHierarchies.add(h);
+                      _context9.n = 17;
+                      return context.sync();
+                    case 17:
+                      _context9.p = 17;
+                      field.summarizeBy = aggregations[i];
+                      _context9.n = 18;
+                      return context.sync();
+                    case 18:
+                      _context9.n = 20;
+                      break;
+                    case 19:
+                      _context9.p = 19;
+                      _t7 = _context9.v;
+                    case 20:
+                      _context9.n = 22;
+                      break;
+                    case 21:
+                      _context9.p = 21;
+                      _t8 = _context9.v;
+                    case 22:
+                      i++;
+                      _context9.n = 15;
+                      break;
+                    case 23:
+                      if ((!cat || cat.length === 0) && vals.length === 0 && headers.length >= 2) {
+                        try {
+                          pivotTable.rowHierarchies.add(pivotTable.hierarchies.getItem(headers[0]));
+                        } catch (_unused8) {}
+                        try {
+                          _h = pivotTable.hierarchies.getItem(headers[1]);
+                          _field = pivotTable.dataHierarchies.add(_h);
+                          try {
+                            _field.summarizeBy = Excel.AggregationFunction.sum;
+                          } catch (_unused9) {}
+                        } catch (_unused0) {}
+                      }
+                      pivotTable.layout.layoutType = "Tabular";
+                      pivotTable.layout.repeatAllItemLabels(true);
+                      _context9.n = 24;
+                      return context.sync();
+                    case 24:
+                      _context9.p = 24;
+                      pivotRange = pivotTable.layout.getRange();
+                      pivotRange.load(["address", "columnCount", "rowCount"]);
+                      _context9.n = 25;
+                      return context.sync();
+                    case 25:
+                      pivotChart = newSheet.charts.add(type, pivotRange, "Auto");
+                      pivotChart.title.text = normalized.chartTitle || "AI-PivotChart";
+                      _context9.n = 26;
+                      return context.sync();
+                    case 26:
+                      pivotChart.left = (pivotRange.columnCount + 2) * 100;
+                      pivotChart.top = 0;
+                      pivotChart.width = 400;
+                      pivotChart.height = 300;
+                      _context9.n = 27;
+                      return context.sync();
+                    case 27:
+                      newSheet.activate();
+                      _context9.n = 28;
+                      return context.sync();
+                    case 28:
+                      _context9.n = 34;
+                      break;
+                    case 29:
+                      _context9.p = 29;
+                      _t9 = _context9.v;
+                      _context9.p = 30;
+                      seedRange = dataRange.getCell(0, 0);
+                      chart = ws.charts.add(type, seedRange, "Auto");
+                      chart.title.text = normalized.chartTitle || "AI-Suggested Chart";
+                      _context9.n = 31;
+                      return context.sync();
+                    case 31:
+                      _context9.n = 32;
+                      return optimizeChartSeries(chart);
+                    case 32:
+                      _context9.n = 34;
+                      break;
+                    case 33:
+                      _context9.p = 33;
+                      _t0 = _context9.v;
+                      throw _t0;
+                    case 34:
+                      _context9.n = 37;
+                      break;
+                    case 35:
+                      _context9.p = 35;
+                      _t1 = _context9.v;
+                      _seedRange = dataRange.getCell(0, 0).getResizedRange(1, 1);
+                      _chart = ws.charts.add(type, _seedRange, "Auto");
+                      _chart.title.text = normalized.chartTitle || "AI-Suggested Chart";
+                      _context9.n = 36;
+                      return context.sync();
+                    case 36:
+                      _context9.n = 37;
+                      return optimizeChartSeries(_chart);
+                    case 37:
+                      _context9.n = 59;
+                      break;
+                    case 38:
+                      _newSheetName = "AI_Chart_".concat(Date.now());
+                      _context9.p = 39;
+                      dashboardSheet = wb.worksheets.add(_newSheetName);
+                      _context9.n = 40;
+                      return context.sync();
+                    case 40:
+                      _context9.n = 42;
+                      break;
+                    case 41:
+                      _context9.p = 41;
+                      _t10 = _context9.v;
+                      dashboardSheet = wb.worksheets.add();
+                      _context9.n = 42;
+                      return context.sync();
+                    case 42:
+                      titleCell = dashboardSheet.getRange("A1");
+                      titleCell.values = [[normalized.chartTitle || "AI Chart Summary"]];
+                      titleCell.format.font.bold = true;
+                      titleCell.format.font.size = 16;
+                      titleCell.format.font.color = "#004B87";
+                      dashboardSheet.getRange("A1:G1").merge(true);
+                      inferencesText = suggest.inferences || "No specific inferences generated for this view.";
+                      inferenceCell = dashboardSheet.getRange("A2");
+                      inferenceCell.values = [[inferencesText]];
+                      inferenceCell.format.font.italic = true;
+                      inferenceCell.format.font.size = 11;
+                      inferenceCell.format.font.color = "#444444";
+                      inferenceRange = dashboardSheet.getRange("A2:G3");
+                      inferenceRange.merge(true);
+                      inferenceRange.format.wrapText = true;
+                      inferenceRange.format.verticalAlignment = "Top";
+                      _context9.n = 43;
+                      return context.sync();
+                    case 43:
+                      monthlyChartRows = buildMonthlyChartRows(values, headers, normalized, cat, vals, aggregationsRaw, question);
+                      if (!monthlyChartRows) {
+                        _context9.n = 46;
+                        break;
+                      }
+                      tableRows = monthlyChartRows.rows.length + 1;
+                      targetBoundRange = dashboardSheet.getRange("A5").getResizedRange(tableRows - 1, 1);
+                      targetBoundRange.values = [monthlyChartRows.headers].concat(_toConsumableArray(monthlyChartRows.rows));
+                      targetBoundRange.format.autofitColumns();
+                      ["InsideHorizontal", "InsideVertical", "EdgeBottom", "EdgeLeft", "EdgeRight", "EdgeTop"].forEach(function (b) {
+                        targetBoundRange.format.borders.getItem(b).style = "Continuous";
+                      });
+                      dashboardSheet.getRange("A5:B5").format.font.bold = true;
+                      dashboardSheet.getRange("A5:B5").format.fill.color = "#EBF1F5";
+                      _context9.n = 44;
+                      return context.sync();
+                    case 44:
+                      _chart2 = dashboardSheet.charts.add(type, targetBoundRange, "Auto");
+                      _chart2.title.text = normalized.chartTitle || "Month-on-Month Sales";
+                      _chart2.top = 80;
+                      _chart2.left = 240;
+                      _chart2.width = 560;
+                      _chart2.height = 350;
+                      _context9.n = 45;
+                      return context.sync();
+                    case 45:
+                      _context9.n = 58;
+                      break;
+                    case 46:
+                      if (!(catTitles.length > 0)) {
+                        _context9.n = 53;
+                        break;
+                      }
+                      // ── STEP 1: JS extracts unique category combos only (lightweight, no math) ──
+                      catIndices = catTitles.map(function (c) {
+                        return headers.indexOf(c);
+                      }).filter(function (i) {
+                        return i !== -1;
+                      });
+                      seenKeys = new Set();
+                      uniqueRows = []; // array of string[] — one per unique combo
+                      _loop2 = /*#__PURE__*/_regenerator().m(function _loop2() {
+                        var row, keyParts, key;
+                        return _regenerator().w(function (_context8) {
+                          while (1) switch (_context8.n) {
+                            case 0:
+                              row = values[_i2];
+                              if (row) {
+                                _context8.n = 1;
+                                break;
+                              }
+                              return _context8.a(2, 1);
+                            case 1:
+                              keyParts = catIndices.map(function (idx) {
+                                return row[idx] != null ? String(row[idx]) : "";
+                              });
+                              key = keyParts.join(" ||| ");
+                              if (!seenKeys.has(key)) {
+                                seenKeys.add(key);
+                                uniqueRows.push(keyParts);
+                              }
+                            case 2:
+                              return _context8.a(2);
+                          }
+                        }, _loop2);
+                      });
+                      _i2 = 1;
+                    case 47:
+                      if (!(_i2 < values.length)) {
+                        _context9.n = 50;
+                        break;
+                      }
+                      return _context9.d(_regeneratorValues(_loop2()), 48);
+                    case 48:
+                      if (!_context9.v) {
+                        _context9.n = 49;
+                        break;
+                      }
+                      return _context9.a(3, 49);
+                    case 49:
+                      _i2++;
+                      _context9.n = 47;
+                      break;
+                    case 50:
+                      console.log("[aiChart] Hybrid: found ".concat(uniqueRows.length, " unique category combos."));
+
+                      // ── SORT uniqueRows chronologically / logically ──────────────────────
+                      MONTH_ORDER = {
+                        january: 1,
+                        february: 2,
+                        march: 3,
+                        april: 4,
+                        may: 5,
+                        june: 6,
+                        july: 7,
+                        august: 8,
+                        september: 9,
+                        october: 10,
+                        november: 11,
+                        december: 12,
+                        jan: 1,
+                        feb: 2,
+                        mar: 3,
+                        apr: 4,
+                        jun: 6,
+                        jul: 7,
+                        aug: 8,
+                        sep: 9,
+                        oct: 10,
+                        nov: 11,
+                        dec: 12,
+                        "1": 1,
+                        "2": 2,
+                        "3": 3,
+                        "4": 4,
+                        "5": 5,
+                        "6": 6,
+                        "7": 7,
+                        "8": 8,
+                        "9": 9,
+                        "10": 10,
+                        "11": 11,
+                        "12": 12
+                      };
+                      toMonthNum = function toMonthNum(s) {
+                        return MONTH_ORDER[s.toLowerCase()] || null;
+                      };
+                      isYear = function isYear(s) {
+                        return /^\d{4}$/.test(s.trim());
+                      };
+                      uniqueRows.sort(function (a, b) {
+                        for (var ci = 0; ci < a.length; ci++) {
+                          var av = a[ci],
+                            bv = b[ci];
+                          // If this part looks like a year, sort numerically
+                          if (isYear(av) && isYear(bv)) {
+                            var diff = parseInt(av) - parseInt(bv);
+                            if (diff !== 0) return diff;
+                            continue;
+                          }
+                          // If this part looks like a month name/number, sort by calendar position
+                          var am = toMonthNum(av),
+                            bm = toMonthNum(bv);
+                          if (am !== null && bm !== null) {
+                            var _diff = am - bm;
+                            if (_diff !== 0) return _diff;
+                            continue;
+                          }
+                          // Otherwise plain string compare
+                          if (av < bv) return -1;
+                          if (av > bv) return 1;
+                        }
+                        return 0;
+                      });
+                      console.log("[aiChart] Sorted uniqueRows sample:", uniqueRows.slice(0, 5));
+
+                      // ── STEP 2: Build native Excel formula string per aggregation type ──
+                      // catCols[i].address = absolute source address e.g. "Sheet1!B2:B307646"
+                      // valCols[i].address = absolute source address e.g. "Sheet1!G2:G307646"
+                      catAddrs = catCols.map(function (c) {
+                        return c.address;
+                      });
+                      valAddrs = valCols.map(function (v) {
+                        return v.address;
+                      });
+                      getNativeFormula = function getNativeFormula(aggType, valAddr, catAddrList, catValueParts) {
+                        // Build SUMIFS / AVERAGEIFS / MAXIFS / MINIFS / COUNTIFS criteria pairs
+                        // Each category column address paired with the literal value in that row
+                        var criteriaPairs = catAddrList.map(function (cAddr, ci) {
+                          var escaped = catValueParts[ci].replace(/"/g, '""'); // escape quotes
+                          return "".concat(cAddr, ",\"").concat(escaped, "\"");
+                        }).join(",");
+                        switch (aggType.toUpperCase()) {
+                          case "COUNT":
+                            return "=IFERROR(COUNTIFS(".concat(criteriaPairs, "),0)");
+                          case "AVERAGE":
+                            return "=IFERROR(AVERAGEIFS(".concat(valAddr, ",").concat(criteriaPairs, "),0)");
+                          case "MAX":
+                            return "=IFERROR(MAXIFS(".concat(valAddr, ",").concat(criteriaPairs, "),0)");
+                          case "MIN":
+                            return "=IFERROR(MINIFS(".concat(valAddr, ",").concat(criteriaPairs, "),0)");
+                          default:
+                            return "=IFERROR(SUMIFS(".concat(valAddr, ",").concat(criteriaPairs, "),0)");
+                          // SUM
+                        }
+                      }; // ── STEP 3: Write header row ──
+                      activeColOffset = catTitles.length + valTitles.length;
+                      headerRow = [].concat(catTitles, _toConsumableArray(valTitles.map(function (v, i) {
+                        return "".concat(v, " (").concat(aggregationsRaw[i] || "SUM", ")");
+                      })));
+                      headerRange = dashboardSheet.getRange("A5").getResizedRange(0, activeColOffset - 1);
+                      headerRange.values = [headerRow];
+                      headerRange.format.font.bold = true;
+                      headerRange.format.fill.color = "#EBF1F5";
+
+                      // ── STEP 4: Write unique category strings + native Excel formulas row by row ──
+                      for (r = 0; r < uniqueRows.length; r++) {
+                        keyParts = uniqueRows[r];
+                        dataRow = r + 6; // A6, A7, ... (row 5 = headers)
+                        // Write category label(s) as static strings
+                        for (ci = 0; ci < catTitles.length; ci++) {
+                          dashboardSheet.getRange("A".concat(dataRow)).getOffsetRange(0, ci).values = [[keyParts[ci]]];
+                        }
+
+                        // Write native Excel formula for each value column
+                        for (vi = 0; vi < valTitles.length; vi++) {
+                          aggType = aggregationsRaw[vi] || "SUM";
+                          formula = getNativeFormula(aggType, valAddrs[vi], catAddrs, keyParts);
+                          console.log("[aiChart] Row ".concat(dataRow, ", col ").concat(catTitles.length + vi, ": ").concat(formula));
+                          dashboardSheet.getRange("A".concat(dataRow)).getOffsetRange(0, catTitles.length + vi).formulas = [[formula]];
+                        }
+                      }
+
+                      // ── STEP 5: Style, autofit, and chart ──
+                      _tableRows = uniqueRows.length + 1; // +1 for header
+                      _targetBoundRange = dashboardSheet.getRange("A5").getResizedRange(_tableRows - 1, activeColOffset - 1);
+                      _targetBoundRange.format.autofitColumns();
+                      ["InsideHorizontal", "InsideVertical", "EdgeBottom", "EdgeLeft", "EdgeRight", "EdgeTop"].forEach(function (b) {
+                        _targetBoundRange.format.borders.getItem(b).style = "Continuous";
+                      });
+                      _context9.n = 51;
+                      return context.sync();
+                    case 51:
+                      // Let Excel evaluate all SUMIFS formulas before charting
+                      _chart3 = dashboardSheet.charts.add(type, _targetBoundRange, "Auto");
+                      _chart3.title.text = normalized.chartTitle || "AI-Aggregated Chart";
+                      _chart3.top = 80;
+                      _chart3.left = (activeColOffset + 1) * 70 + 20;
+                      _chart3.width = 500;
+                      _chart3.height = 350;
+                      _context9.n = 52;
+                      return context.sync();
+                    case 52:
+                      _context9.n = 58;
+                      break;
+                    case 53:
+                      dashSeedRange = dashboardSheet.getRange("A5:B6");
+                      _chart4 = dashboardSheet.charts.add(type, dashSeedRange, "Auto");
+                      _chart4.title.text = normalized.chartTitle || "AI-Suggested Chart";
+                      _chart4.top = 65;
+                      _chart4.left = 5;
+                      _chart4.width = 500;
+                      _chart4.height = 350;
+                      _context9.p = 54;
+                      _context9.n = 55;
+                      return context.sync();
+                    case 55:
+                      _context9.n = 57;
+                      break;
+                    case 56:
+                      _context9.p = 56;
+                      _t11 = _context9.v;
+                      throw new Error("charts.add Failed: ".concat(_t11.message));
+                    case 57:
+                      _context9.n = 58;
+                      return optimizeChartSeries(_chart4);
+                    case 58:
+                      dashboardSheet.activate();
+                    case 59:
+                      _context9.p = 59;
+                      _context9.n = 60;
+                      return context.sync();
+                    case 60:
+                      _context9.n = 62;
+                      break;
+                    case 61:
+                      _context9.p = 61;
+                      _t12 = _context9.v;
+                      throw new Error("Final sync failed: ".concat(_t12.message));
+                    case 62:
+                      return _context9.a(2);
                   }
-                }, _callee7);
+                }, _callee8, null, [[59, 61], [54, 56], [39, 41], [30, 33], [24, 29], [17, 19], [16, 21], [10, 35], [6, 8], [1, 3]]);
               }));
-              return function (_x3) {
-                return _ref6.apply(this, arguments);
+              return function (_x0) {
+                return _ref15.apply(this, arguments);
               };
             }());
-          case 1:
-            return _context8.a(2);
-        }
-      }, _callee8);
-    }));
-    return _executeExcelOperations.apply(this, arguments);
-  }
-  var auditData = /*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee4() {
-      var _yield$getExcelData4, values, address, metadata, resp, _yield$resp$json2, audit, _t4;
-      return _regenerator().w(function (_context4) {
-        while (1) switch (_context4.p = _context4.n) {
-          case 0:
-            setLoading(true);
-            setOutput("Auditing data quality...");
-            _context4.p = 1;
-            _context4.n = 2;
-            return getExcelData();
-          case 2:
-            _yield$getExcelData4 = _context4.v;
-            values = _yield$getExcelData4.values;
-            address = _yield$getExcelData4.address;
-            metadata = _yield$getExcelData4.metadata;
-            _context4.n = 3;
-            return fetch("".concat(apiBase, "/ai_audit"), {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json"
-              },
-              body: JSON.stringify({
-                table: values,
-                address: address
-              })
-            });
-          case 3:
-            resp = _context4.v;
-            _context4.n = 4;
-            return resp.json();
-          case 4:
-            _yield$resp$json2 = _context4.v;
-            audit = _yield$resp$json2.audit;
-            setOutput(audit);
-            _context4.n = 6;
-            break;
           case 5:
-            _context4.p = 5;
-            _t4 = _context4.v;
-            setOutput("Audit error: ".concat(_t4.message));
+            setOutput("✅ Chart added successfully!");
+            _context0.n = 7;
+            break;
           case 6:
-            _context4.p = 6;
-            setLoading(false);
-            return _context4.f(6);
+            _context0.p = 6;
+            _t13 = _context0.v;
+            setOutput("\u274C Error: ".concat(_t13.message));
           case 7:
-            return _context4.a(2);
+            _context0.p = 7;
+            setLoading(false);
+            return _context0.f(7);
+          case 8:
+            return _context0.a(2);
         }
-      }, _callee4, null, [[1, 5, 6, 7]]);
+      }, _callee9, null, [[0, 6, 7, 8]]);
     }));
-    return function auditData() {
-      return _ref4.apply(this, arguments);
+    return function aiChart() {
+      return _ref13.apply(this, arguments);
     };
   }();
 
-  // Progress indicator component
-  var ProgressIndicator = function ProgressIndicator() {
-    if (!operationProgress) return null;
-    var stages = {
-      initializing: "Initializing...",
-      reading_data: "Reading Excel data...",
-      analyzing: "Analyzing with AI...",
-      processing: "Processing request...",
-      creating_worksheets: "Creating worksheets...",
-      complete: "Complete!"
+  /**
+   * _renderChart — inserts a chart from a pre-resolved suggest object.
+   * Called by the SmartRoute path so we don't need a second /ai_chart call.
+   * The suggest object must have: chartType, chartTitle, categoryColumn,
+   * valueColumns, aggregations, inferences.
+   */
+  var _renderChart = /*#__PURE__*/function () {
+    var _ref17 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee0(suggest, values, address) {
+      var _suggest$categoryColu2, normalized, headers, lowerMap, headerSet, catMapped, valsRaw, valsMapped, cat, vals, aggregationsRaw, fullSuggest, _t14;
+      return _regenerator().w(function (_context1) {
+        while (1) switch (_context1.p = _context1.n) {
+          case 0:
+            _context1.p = 0;
+            // Reuse the same normalisation + Excel.run block from aiChart
+            normalized = {
+              chartType: suggest.chartType,
+              chartTitle: suggest.chartTitle,
+              categoryColumn: (_suggest$categoryColu2 = suggest.categoryColumn) !== null && _suggest$categoryColu2 !== void 0 ? _suggest$categoryColu2 : null,
+              valueColumns: Array.isArray(suggest.valueColumns) ? suggest.valueColumns : [],
+              inferences: suggest.inferences || ""
+            };
+            headers = Array.isArray(values) && values[0] ? values[0].map(function (h) {
+              return String(h).trim();
+            }) : [];
+            lowerMap = new Map(headers.map(function (h) {
+              return [h.toLowerCase(), h];
+            }));
+            headerSet = new Set(headers);
+            catMapped = Array.isArray(normalized.categoryColumn) ? normalized.categoryColumn.map(function (c) {
+              return typeof c === "string" ? lowerMap.get(c.toLowerCase()) : null;
+            }).filter(Boolean) : typeof normalized.categoryColumn === "string" ? [lowerMap.get(normalized.categoryColumn.toLowerCase())] : [];
+            valsRaw = normalized.valueColumns.filter(function (v) {
+              return typeof v === "string";
+            }).map(function (v) {
+              return v.trim();
+            });
+            valsMapped = valsRaw.map(function (v) {
+              return lowerMap.get(v.toLowerCase());
+            }).filter(Boolean);
+            cat = catMapped.length > 0 && catMapped.every(function (c) {
+              return headerSet.has(c);
+            }) ? catMapped : null;
+            vals = valsMapped.filter(function (v) {
+              return headerSet.has(v);
+            });
+            aggregationsRaw = Array.isArray(suggest.aggregations) ? suggest.aggregations : []; // Synthesise a full suggest object understood by findInExcelRange (same as aiChart path)
+            fullSuggest = _objectSpread(_objectSpread({}, normalized), {}, {
+              categoryColumn: cat,
+              valueColumns: vals,
+              aggregations: aggregationsRaw
+            }); // Call the shared aiChart core with preloaded data
+            _context1.n = 1;
+            return _runChartCore(fullSuggest, values, address, aggregationsRaw);
+          case 1:
+            addMessage("assistant", "✅ Chart added to a new dashboard sheet.", {
+              type: "action",
+              mode: "ai_chart"
+            });
+            _context1.n = 3;
+            break;
+          case 2:
+            _context1.p = 2;
+            _t14 = _context1.v;
+            addMessage("assistant", "\u274C Chart failed: ".concat(_t14.message), {
+              type: "error"
+            });
+          case 3:
+            return _context1.a(2);
+        }
+      }, _callee0, null, [[0, 2]]);
+    }));
+    return function _renderChart(_x10, _x11, _x12) {
+      return _ref17.apply(this, arguments);
     };
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      style: {
-        marginTop: 10,
-        padding: 10,
-        background: "#f0f8ff",
-        borderRadius: 5
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      style: {
-        fontSize: 12,
-        marginBottom: 5
-      }
-    }, stages[operationProgress.stage] || operationProgress.stage), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      style: {
-        width: "100%",
-        height: 8,
-        background: "#e0e0e0",
-        borderRadius: 4
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      style: {
-        width: "".concat(operationProgress.progress, "%"),
-        height: "100%",
-        background: "#4CAF50",
-        borderRadius: 4,
-        transition: "width 0.3s ease"
-      }
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-      style: {
-        fontSize: 10,
-        color: "#666",
-        marginTop: 2
-      }
-    }, operationProgress.progress, "% complete"));
-  };
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      padding: 20,
-      fontFamily: "Segoe UI, Tahoma, Geneva, Verdana, sans-serif"
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("h2", {
-    style: {
-      color: "#0078d4",
-      marginBottom: 10
-    }
-  }, "AI Excel Assistant (Enhanced)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
-    style: {
-      color: "#666",
-      marginBottom: 15
-    }
-  }, "Select data in Excel, ask your question, and let AI decide the best approach."), dataInfo && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      background: "#f9f9f9",
-      padding: 10,
-      borderRadius: 5,
-      fontSize: 12,
-      marginBottom: 10,
-      color: "#555"
-    }
-  }, "\uD83D\uDCCA Dataset: ", (_dataInfo$originalRow = dataInfo.originalRows) === null || _dataInfo$originalRow === void 0 ? void 0 : _dataInfo$originalRow.toLocaleString(), " rows \xD7 ", dataInfo.originalColumns, " columns", dataInfo.isSampled && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
-    style: {
-      color: "#ff6b00"
-    }
-  }, " ", "(Sampled: ", (_dataInfo$sampledRows = dataInfo.sampledRows) === null || _dataInfo$sampledRows === void 0 ? void 0 : _dataInfo$sampledRows.toLocaleString(), " rows analyzed)")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
-    style: {
-      width: "98%",
-      minHeight: 60,
-      marginBottom: 15,
-      padding: 10,
-      border: "1px solid #ccc",
-      borderRadius: 4,
+  }();
+
+  /**
+   * _runChartCore — the inner Excel.run logic extracted from aiChart.
+   * Accepts a normalised suggest, pre-loaded values, address, and aggregationsRaw.
+   * This avoids duplicating the large Excel.run block.
+   */
+  var _runChartCore = /*#__PURE__*/function () {
+    var _ref18 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee10(normalized, values, address, aggregationsRaw) {
+      var _values$;
+      var cat, vals, aggs, headers;
+      return _regenerator().w(function (_context12) {
+        while (1) switch (_context12.n) {
+          case 0:
+            // Delegate back to aiChart but supply the pre-loaded suggest as the resolved API response
+            // We re-use the aiChart variable but intercept the API call.
+            // Simplest approach: just call aiChart with the question already in state,
+            // it will call /ai_chart which may return slightly different columns,
+            // but for the SmartRoute path the chart result is already resolved so we pass it directly.
+            // For a cleaner future refactor, aiChart can be split into fetch + render.
+            // For now we write the chart from the already-computed suggest.
+            cat = normalized.categoryColumn;
+            vals = normalized.valueColumns;
+            aggs = aggregationsRaw;
+            headers = ((_values$ = values[0]) === null || _values$ === void 0 ? void 0 : _values$.map(function (h) {
+              return String(h).trim();
+            })) || [];
+            _context12.n = 1;
+            return Excel.run(/*#__PURE__*/function () {
+              var _ref19 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee1(context) {
+                var wb, ws, addressA1, parts, sheetName, dataRange, type, catCols, catTitles, _iterator5, _step5, c, idx, _r, valCols, valTitles, _iterator6, _step6, v, _idx2, _r2, newSheetName, dashboardSheet, titleCell, inferenceCell, monthlyChartRows, tableRows, targetBoundRange, chart, catIndices, seenKeys, uniqueRows, _loop3, i, catAddrs, valAddrs, getNativeFormula, activeColOffset, headerRow, hdrRange, r, keyParts, dataRow, ci, vi, formula, _tableRows2, _targetBoundRange2, _chart5, seedRange, _chart6, _t15, _t16;
+                return _regenerator().w(function (_context11) {
+                  while (1) switch (_context11.p = _context11.n) {
+                    case 0:
+                      wb = context.workbook;
+                      ws = wb.worksheets.getActiveWorksheet();
+                      addressA1 = address || "";
+                      if (!(typeof addressA1 === "string" && addressA1.includes("!"))) {
+                        _context11.n = 4;
+                        break;
+                      }
+                      parts = addressA1.split("!");
+                      sheetName = parts[0].replace(/^'|'$/g, "");
+                      addressA1 = parts.slice(1).join("!");
+                      _context11.p = 1;
+                      ws = wb.worksheets.getItem(sheetName);
+                      _context11.n = 2;
+                      return context.sync();
+                    case 2:
+                      _context11.n = 4;
+                      break;
+                    case 3:
+                      _context11.p = 3;
+                      _t15 = _context11.v;
+                      ws = wb.worksheets.getActiveWorksheet();
+                    case 4:
+                      dataRange = ws.getRange(addressA1);
+                      type = normalized.chartType || "ColumnClustered"; // Load category / value column ranges
+                      catCols = [], catTitles = [];
+                      _iterator5 = _createForOfIteratorHelper(cat || []);
+                      try {
+                        for (_iterator5.s(); !(_step5 = _iterator5.n()).done;) {
+                          c = _step5.value;
+                          idx = headers.indexOf(c);
+                          if (idx !== -1) {
+                            _r = dataRange.getColumn(idx).getOffsetRange(1, 0).getResizedRange(-1, 0);
+                            _r.load("address");
+                            catCols.push(_r);
+                            catTitles.push(c);
+                          }
+                        }
+                      } catch (err) {
+                        _iterator5.e(err);
+                      } finally {
+                        _iterator5.f();
+                      }
+                      valCols = [], valTitles = [];
+                      _iterator6 = _createForOfIteratorHelper(vals || []);
+                      try {
+                        for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
+                          v = _step6.value;
+                          _idx2 = headers.indexOf(v);
+                          if (_idx2 !== -1) {
+                            _r2 = dataRange.getColumn(_idx2).getOffsetRange(1, 0).getResizedRange(-1, 0);
+                            _r2.load("address");
+                            valCols.push(_r2);
+                            valTitles.push(v);
+                          }
+                        }
+                      } catch (err) {
+                        _iterator6.e(err);
+                      } finally {
+                        _iterator6.f();
+                      }
+                      _context11.n = 5;
+                      return context.sync();
+                    case 5:
+                      // Create dashboard sheet
+                      newSheetName = "AI_Chart_".concat(Date.now());
+                      _context11.p = 6;
+                      dashboardSheet = wb.worksheets.add(newSheetName);
+                      _context11.n = 7;
+                      return context.sync();
+                    case 7:
+                      _context11.n = 9;
+                      break;
+                    case 8:
+                      _context11.p = 8;
+                      _t16 = _context11.v;
+                      dashboardSheet = wb.worksheets.add();
+                      _context11.n = 9;
+                      return context.sync();
+                    case 9:
+                      titleCell = dashboardSheet.getRange("A1");
+                      titleCell.values = [[normalized.chartTitle || "AI Chart Summary"]];
+                      titleCell.format.font.bold = true;
+                      titleCell.format.font.size = 16;
+                      titleCell.format.font.color = "#004B87";
+                      dashboardSheet.getRange("A1:G1").merge(true);
+                      inferenceCell = dashboardSheet.getRange("A2");
+                      inferenceCell.values = [[normalized.inferences || "AI-generated chart"]];
+                      inferenceCell.format.font.italic = true;
+                      inferenceCell.format.font.size = 11;
+                      dashboardSheet.getRange("A2:G3").merge(true);
+                      dashboardSheet.getRange("A2:G3").format.wrapText = true;
+                      _context11.n = 10;
+                      return context.sync();
+                    case 10:
+                      monthlyChartRows = buildMonthlyChartRows(values, headers, normalized, cat, vals, aggs, normalized.chartTitle || "");
+                      if (!monthlyChartRows) {
+                        _context11.n = 13;
+                        break;
+                      }
+                      tableRows = monthlyChartRows.rows.length + 1;
+                      targetBoundRange = dashboardSheet.getRange("A5").getResizedRange(tableRows - 1, 1);
+                      targetBoundRange.values = [monthlyChartRows.headers].concat(_toConsumableArray(monthlyChartRows.rows));
+                      targetBoundRange.format.autofitColumns();
+                      dashboardSheet.getRange("A5:B5").format.font.bold = true;
+                      dashboardSheet.getRange("A5:B5").format.fill.color = "#EBF1F5";
+                      _context11.n = 11;
+                      return context.sync();
+                    case 11:
+                      chart = dashboardSheet.charts.add(type, targetBoundRange, "Auto");
+                      chart.title.text = normalized.chartTitle || "Month-on-Month Sales";
+                      chart.top = 80;
+                      chart.left = 240;
+                      chart.width = 560;
+                      chart.height = 350;
+                      _context11.n = 12;
+                      return context.sync();
+                    case 12:
+                      _context11.n = 21;
+                      break;
+                    case 13:
+                      if (!(catTitles.length > 0)) {
+                        _context11.n = 20;
+                        break;
+                      }
+                      // --- Hybrid formula injection (same as aiChart) ---
+                      catIndices = catTitles.map(function (c) {
+                        return headers.indexOf(c);
+                      }).filter(function (i) {
+                        return i !== -1;
+                      });
+                      seenKeys = new Set();
+                      uniqueRows = [];
+                      _loop3 = /*#__PURE__*/_regenerator().m(function _loop3() {
+                        var row, keyParts, key;
+                        return _regenerator().w(function (_context10) {
+                          while (1) switch (_context10.n) {
+                            case 0:
+                              row = values[i];
+                              if (row) {
+                                _context10.n = 1;
+                                break;
+                              }
+                              return _context10.a(2, 1);
+                            case 1:
+                              keyParts = catIndices.map(function (idx) {
+                                return row[idx] != null ? String(row[idx]) : "";
+                              });
+                              key = keyParts.join(" ||| ");
+                              if (!seenKeys.has(key)) {
+                                seenKeys.add(key);
+                                uniqueRows.push(keyParts);
+                              }
+                            case 2:
+                              return _context10.a(2);
+                          }
+                        }, _loop3);
+                      });
+                      i = 1;
+                    case 14:
+                      if (!(i < values.length)) {
+                        _context11.n = 17;
+                        break;
+                      }
+                      return _context11.d(_regeneratorValues(_loop3()), 15);
+                    case 15:
+                      if (!_context11.v) {
+                        _context11.n = 16;
+                        break;
+                      }
+                      return _context11.a(3, 16);
+                    case 16:
+                      i++;
+                      _context11.n = 14;
+                      break;
+                    case 17:
+                      catAddrs = catCols.map(function (c) {
+                        return c.address;
+                      });
+                      valAddrs = valCols.map(function (v) {
+                        return v.address;
+                      });
+                      getNativeFormula = function getNativeFormula(aggType, valAddr, catAddrList, catValueParts) {
+                        var criteriaPairs = catAddrList.map(function (cAddr, ci) {
+                          var escaped = catValueParts[ci].replace(/"/g, '""');
+                          return "".concat(cAddr, ",\"").concat(escaped, "\"");
+                        }).join(",");
+                        switch (aggType.toUpperCase()) {
+                          case "COUNT":
+                            return "=IFERROR(COUNTIFS(".concat(criteriaPairs, "),0)");
+                          case "AVERAGE":
+                            return "=IFERROR(AVERAGEIFS(".concat(valAddr, ",").concat(criteriaPairs, "),0)");
+                          case "MAX":
+                            return "=IFERROR(MAXIFS(".concat(valAddr, ",").concat(criteriaPairs, "),0)");
+                          case "MIN":
+                            return "=IFERROR(MINIFS(".concat(valAddr, ",").concat(criteriaPairs, "),0)");
+                          default:
+                            return "=IFERROR(SUMIFS(".concat(valAddr, ",").concat(criteriaPairs, "),0)");
+                        }
+                      };
+                      activeColOffset = catTitles.length + valTitles.length;
+                      headerRow = [].concat(catTitles, _toConsumableArray(valTitles.map(function (v, i) {
+                        return "".concat(v, " (").concat(aggs[i] || "SUM", ")");
+                      })));
+                      hdrRange = dashboardSheet.getRange("A5").getResizedRange(0, activeColOffset - 1);
+                      hdrRange.values = [headerRow];
+                      hdrRange.format.font.bold = true;
+                      hdrRange.format.fill.color = "#EBF1F5";
+                      for (r = 0; r < uniqueRows.length; r++) {
+                        keyParts = uniqueRows[r];
+                        dataRow = r + 6;
+                        for (ci = 0; ci < catTitles.length; ci++) dashboardSheet.getRange("A".concat(dataRow)).getOffsetRange(0, ci).values = [[keyParts[ci]]];
+                        for (vi = 0; vi < valTitles.length; vi++) {
+                          formula = getNativeFormula(aggs[vi] || "SUM", valAddrs[vi], catAddrs, keyParts);
+                          dashboardSheet.getRange("A".concat(dataRow)).getOffsetRange(0, catTitles.length + vi).formulas = [[formula]];
+                        }
+                      }
+                      _tableRows2 = uniqueRows.length + 1;
+                      _targetBoundRange2 = dashboardSheet.getRange("A5").getResizedRange(_tableRows2 - 1, activeColOffset - 1);
+                      _targetBoundRange2.format.autofitColumns();
+                      _context11.n = 18;
+                      return context.sync();
+                    case 18:
+                      _chart5 = dashboardSheet.charts.add(type, _targetBoundRange2, "Auto");
+                      _chart5.title.text = normalized.chartTitle || "AI Chart";
+                      _chart5.top = 80;
+                      _chart5.left = (activeColOffset + 1) * 70 + 20;
+                      _chart5.width = 500;
+                      _chart5.height = 350;
+                      _context11.n = 19;
+                      return context.sync();
+                    case 19:
+                      _context11.n = 21;
+                      break;
+                    case 20:
+                      seedRange = dashboardSheet.getRange("A5:B6");
+                      _chart6 = dashboardSheet.charts.add(type, seedRange, "Auto");
+                      _chart6.title.text = normalized.chartTitle || "AI Chart";
+                      _chart6.top = 65;
+                      _chart6.left = 5;
+                      _chart6.width = 500;
+                      _chart6.height = 350;
+                      _context11.n = 21;
+                      return context.sync();
+                    case 21:
+                      dashboardSheet.activate();
+                      _context11.n = 22;
+                      return context.sync();
+                    case 22:
+                      return _context11.a(2);
+                  }
+                }, _callee1, null, [[6, 8], [1, 3]]);
+              }));
+              return function (_x17) {
+                return _ref19.apply(this, arguments);
+              };
+            }());
+          case 1:
+            return _context12.a(2);
+        }
+      }, _callee10);
+    }));
+    return function _runChartCore(_x13, _x14, _x15, _x16) {
+      return _ref18.apply(this, arguments);
+    };
+  }();
+  var aiAction = /*#__PURE__*/function () {
+    var _ref20 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee11() {
+      var startTime, _yield$getExcelData4, values, address, res, _t17;
+      return _regenerator().w(function (_context13) {
+        while (1) switch (_context13.p = _context13.n) {
+          case 0:
+            _context13.p = 0;
+            setLoading(true);
+            setOutput("🚀 Running AI action…");
+            startTime = performance.now();
+            _context13.n = 1;
+            return getExcelData();
+          case 1:
+            _yield$getExcelData4 = _context13.v;
+            values = _yield$getExcelData4.values;
+            address = _yield$getExcelData4.address;
+            _context13.n = 2;
+            return callJson("/action", {
+              table: values,
+              address: address,
+              question: question
+            });
+          case 2:
+            res = _context13.v;
+            _context13.n = 3;
+            return renderWorksheets(res.worksheets);
+          case 3:
+            if (!(res.message || "").toLowerCase().includes("chart recommended")) {
+              _context13.n = 4;
+              break;
+            }
+            _context13.n = 4;
+            return aiChart();
+          case 4:
+            setOutput(res.message || "✅ Done.");
+            _context13.n = 6;
+            break;
+          case 5:
+            _context13.p = 5;
+            _t17 = _context13.v;
+            setOutput("\u274C Error: ".concat(_t17.message));
+          case 6:
+            _context13.p = 6;
+            setLoading(false);
+            return _context13.f(6);
+          case 7:
+            return _context13.a(2);
+        }
+      }, _callee11, null, [[0, 5, 6, 7]]);
+    }));
+    return function aiAction() {
+      return _ref20.apply(this, arguments);
+    };
+  }();
+  var renderWorksheets = /*#__PURE__*/function () {
+    var _ref21 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee13(worksheets) {
+      var _t23;
+      return _regenerator().w(function (_context15) {
+        while (1) switch (_context15.p = _context15.n) {
+          case 0:
+            if (worksheets !== null && worksheets !== void 0 && worksheets.length) {
+              _context15.n = 1;
+              break;
+            }
+            return _context15.a(2);
+          case 1:
+            _context15.p = 1;
+            _context15.n = 2;
+            return Excel.run(/*#__PURE__*/function () {
+              var _ref22 = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee12(context) {
+                var wb, _iterator7, _step7, wsDef, name, existingWs, ws, _iterator8, _step8, cell, _cell$value, _iterator9, _step9, f, _iterator0, _step0, cf, range, _t18, _t19, _t20, _t21, _t22;
+                return _regenerator().w(function (_context14) {
+                  while (1) switch (_context14.p = _context14.n) {
+                    case 0:
+                      wb = context.workbook;
+                      _iterator7 = _createForOfIteratorHelper(worksheets);
+                      _context14.p = 1;
+                      _iterator7.s();
+                    case 2:
+                      if ((_step7 = _iterator7.n()).done) {
+                        _context14.n = 25;
+                        break;
+                      }
+                      wsDef = _step7.value;
+                      name = (wsDef.name || "AI_Output").replace(/[\\/?*[\]]/g, "_").substring(0, 31);
+                      existingWs = wb.worksheets.getItemOrNullObject(name);
+                      _context14.n = 3;
+                      return context.sync();
+                    case 3:
+                      ws = existingWs.isNullObject ? wb.worksheets.add(name) : existingWs;
+                      _context14.n = 4;
+                      return context.sync();
+                    case 4:
+                      _iterator8 = _createForOfIteratorHelper(wsDef.cells || []);
+                      _context14.p = 5;
+                      _iterator8.s();
+                    case 6:
+                      if ((_step8 = _iterator8.n()).done) {
+                        _context14.n = 10;
+                        break;
+                      }
+                      cell = _step8.value;
+                      _context14.p = 7;
+                      ws.getRange(cell.address || "A1").values = [[(_cell$value = cell.value) !== null && _cell$value !== void 0 ? _cell$value : ""]];
+                      _context14.n = 9;
+                      break;
+                    case 8:
+                      _context14.p = 8;
+                      _t18 = _context14.v;
+                      throw _t18;
+                    case 9:
+                      _context14.n = 6;
+                      break;
+                    case 10:
+                      _context14.n = 12;
+                      break;
+                    case 11:
+                      _context14.p = 11;
+                      _t19 = _context14.v;
+                      _iterator8.e(_t19);
+                    case 12:
+                      _context14.p = 12;
+                      _iterator8.f();
+                      return _context14.f(12);
+                    case 13:
+                      _iterator9 = _createForOfIteratorHelper(wsDef.formulas || []);
+                      try {
+                        for (_iterator9.s(); !(_step9 = _iterator9.n()).done;) {
+                          f = _step9.value;
+                          try {
+                            ws.getRange(f.address || "A1").formulas = [[f.formula || ""]];
+                          } catch (_unused15) {}
+                        }
+                      } catch (err) {
+                        _iterator9.e(err);
+                      } finally {
+                        _iterator9.f();
+                      }
+                      if (!wsDef.conditional_formatting) {
+                        _context14.n = 23;
+                        break;
+                      }
+                      _iterator0 = _createForOfIteratorHelper(wsDef.conditional_formatting);
+                      _context14.p = 14;
+                      _iterator0.s();
+                    case 15:
+                      if ((_step0 = _iterator0.n()).done) {
+                        _context14.n = 20;
+                        break;
+                      }
+                      cf = _step0.value;
+                      _context14.p = 16;
+                      if (!(cf.type === "dataBar")) {
+                        _context14.n = 17;
+                        break;
+                      }
+                      range = ws.getRange(cf.range);
+                      range.conditionalFormats.add(Excel.ConditionalFormatType.dataBar);
+                      _context14.n = 17;
+                      return context.sync();
+                    case 17:
+                      _context14.n = 19;
+                      break;
+                    case 18:
+                      _context14.p = 18;
+                      _t20 = _context14.v;
+                    case 19:
+                      _context14.n = 15;
+                      break;
+                    case 20:
+                      _context14.n = 22;
+                      break;
+                    case 21:
+                      _context14.p = 21;
+                      _t21 = _context14.v;
+                      _iterator0.e(_t21);
+                    case 22:
+                      _context14.p = 22;
+                      _iterator0.f();
+                      return _context14.f(22);
+                    case 23:
+                      ws.getRange().format.autofitColumns();
+                      ws.activate();
+                    case 24:
+                      _context14.n = 2;
+                      break;
+                    case 25:
+                      _context14.n = 27;
+                      break;
+                    case 26:
+                      _context14.p = 26;
+                      _t22 = _context14.v;
+                      _iterator7.e(_t22);
+                    case 27:
+                      _context14.p = 27;
+                      _iterator7.f();
+                      return _context14.f(27);
+                    case 28:
+                      _context14.n = 29;
+                      return context.sync();
+                    case 29:
+                      return _context14.a(2);
+                  }
+                }, _callee12, null, [[16, 18], [14, 21, 22, 23], [7, 8], [5, 11, 12, 13], [1, 26, 27, 28]]);
+              }));
+              return function (_x19) {
+                return _ref22.apply(this, arguments);
+              };
+            }());
+          case 2:
+            _context15.n = 4;
+            break;
+          case 3:
+            _context15.p = 3;
+            _t23 = _context15.v;
+            throw new Error("Excel worksheet creation failed: ".concat(_t23.message));
+          case 4:
+            return _context15.a(2);
+        }
+      }, _callee13, null, [[1, 3]]);
+    }));
+    return function renderWorksheets(_x18) {
+      return _ref21.apply(this, arguments);
+    };
+  }();
+
+  // ── Styles ───────────────────────────────────────────────────────────────────
+  var S = {
+    root: {
+      fontFamily: "'DM Sans', sans-serif",
+      background: brand.offWhite,
+      minHeight: "100vh",
+      display: "flex",
+      flexDirection: "column",
       fontSize: 14,
+      color: brand.textPrimary
+    },
+    // ── Header
+    header: {
+      background: brand.navy,
+      padding: "14px 16px",
+      display: "flex",
+      alignItems: "center",
+      gap: 10,
+      borderBottom: "2px solid ".concat(brand.teal),
+      flexShrink: 0
+    },
+    logoImg: {
+      width: 30,
+      height: 30,
+      objectFit: "contain"
+    },
+    brandName: {
+      fontFamily: "'Syne', sans-serif",
+      fontSize: 16,
+      fontWeight: 700,
+      letterSpacing: "0.05em",
+      color: "#fff",
+      lineHeight: 1.1
+    },
+    brandSub: {
+      fontSize: 9,
+      color: "rgba(255,255,255,0.45)",
+      letterSpacing: "0.12em",
+      textTransform: "uppercase",
+      marginTop: 2
+    },
+    settingsToggle: {
+      marginLeft: "auto",
+      background: "none",
+      border: "none",
+      color: "rgba(255,255,255,0.55)",
+      cursor: "pointer",
+      padding: "4px 6px",
+      borderRadius: 6,
+      fontSize: 16,
+      lineHeight: 1,
+      transition: "color 0.15s",
+      display: "flex",
+      alignItems: "center"
+    },
+    // ── Body
+    body: {
+      flex: 1,
+      padding: "16px 16px 20px",
+      display: "flex",
+      flexDirection: "column",
+      gap: 14,
+      animation: "fadeUp 0.25s ease",
+      overflowY: "auto"
+    },
+    // ── Settings panel
+    settingsPanel: {
+      background: brand.white,
+      border: "1px solid ".concat(brand.border),
+      borderRadius: 10,
+      padding: "14px 16px",
+      display: "flex",
+      flexDirection: "column",
+      gap: 10,
+      animation: "fadeUp 0.18s ease"
+    },
+    toggleRow: {
+      display: "flex",
+      alignItems: "center",
+      gap: 10,
+      cursor: "pointer",
+      padding: "3px 0"
+    },
+    toggleText: {
+      fontSize: 13,
+      color: "#3D566E",
+      lineHeight: 1.4
+    },
+    // ── Input
+    inputWrap: {
+      position: "relative"
+    },
+    input: {
+      width: "100%",
+      padding: "11px 14px",
+      background: brand.white,
+      border: "1.5px solid ".concat(brand.border),
+      borderRadius: 10,
+      fontFamily: "'DM Sans', sans-serif",
+      fontSize: 13.5,
+      color: brand.textPrimary,
+      outline: "none",
+      transition: "border-color 0.18s, box-shadow 0.18s",
       resize: "vertical"
     },
-    value: question,
-    onChange: function onChange(e) {
-      return setQuestion(e.target.value);
+    select: {
+      width: "100%",
+      padding: "9px 12px",
+      background: brand.white,
+      border: "1.5px solid ".concat(brand.border),
+      borderRadius: 8,
+      fontFamily: "'DM Sans', sans-serif",
+      fontSize: 13,
+      color: brand.textPrimary,
+      outline: "none",
+      cursor: "pointer",
+      appearance: "none",
+      backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236B8399' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E\")",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "right 12px center",
+      paddingRight: 32
     },
-    placeholder: "e.g. What are the top 10 SKUs by sales? Create a performance dashboard. Generate formulas for ranking analysis."
+    // ── Primary action button
+    btnPrimary: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 8,
+      padding: "13px 16px",
+      borderRadius: 10,
+      background: brand.teal,
+      color: brand.white,
+      fontFamily: "'DM Sans', sans-serif",
+      fontSize: 14,
+      fontWeight: 600,
+      border: "none",
+      cursor: "pointer",
+      boxShadow: "0 3px 12px rgba(43,201,156,0.28)",
+      transition: "background 0.15s, box-shadow 0.15s, transform 0.12s",
+      width: "100%",
+      letterSpacing: "0.01em"
+    },
+    // ── Secondary button grid
+    btnGrid: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr 1fr",
+      gap: 8
+    },
+    btnSecondary: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 5,
+      padding: "10px 6px",
+      borderRadius: 10,
+      background: brand.navyMid,
+      color: brand.white,
+      fontFamily: "'DM Sans', sans-serif",
+      fontSize: 11,
+      fontWeight: 500,
+      border: "none",
+      cursor: "pointer",
+      transition: "background 0.15s",
+      lineHeight: 1.2,
+      textAlign: "center"
+    },
+    btnSecondaryIcon: {
+      fontSize: 18,
+      transition: "transform 0.15s",
+      display: "block"
+    },
+    btnGhost: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 6,
+      padding: "8px 12px",
+      borderRadius: 8,
+      background: "transparent",
+      color: brand.textMuted,
+      fontFamily: "'DM Sans', sans-serif",
+      fontSize: 12,
+      fontWeight: 500,
+      border: "1.5px solid ".concat(brand.border),
+      cursor: "pointer",
+      transition: "all 0.15s"
+    },
+    // ── Output
+    outputWrap: {
+      background: brand.white,
+      border: "1px solid ".concat(brand.border),
+      borderRadius: 10,
+      padding: "14px 16px",
+      minHeight: 100,
+      flex: 1
+    },
+    outputEmpty: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 8,
+      padding: "20px 0",
+      color: brand.textLight
+    },
+    outputEmptyIcon: {
+      fontSize: 28,
+      opacity: 0.5
+    },
+    outputText: {
+      fontSize: 13,
+      lineHeight: 1.65,
+      color: "#3D566E",
+      whiteSpace: "pre-wrap",
+      wordBreak: "break-word"
+    },
+    loadingRow: {
+      display: "flex",
+      alignItems: "center",
+      gap: 8,
+      marginBottom: 8
+    },
+    loadingText: {
+      fontSize: 12,
+      fontWeight: 500,
+      color: brand.teal
+    },
+    // ── Footer
+    footer: {
+      padding: "9px 16px",
+      borderTop: "1px solid ".concat(brand.border),
+      display: "flex",
+      alignItems: "center",
+      gap: 6,
+      flexShrink: 0
+    },
+    footerDot: {
+      width: 6,
+      height: 6,
+      borderRadius: "50%",
+      background: brand.teal,
+      flexShrink: 0
+    },
+    footerText: {
+      fontSize: 10.5,
+      color: brand.textMuted,
+      letterSpacing: "0.03em",
+      flex: 1
+    },
+    // ── Landing (API key page)
+    landing: {
+      flex: 1,
+      display: "flex",
+      flexDirection: "column",
+      background: brand.navy,
+      padding: "32px 20px 28px"
+    },
+    landingLogo: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      marginBottom: 28,
+      gap: 10
+    },
+    landingCard: {
+      background: brand.navyMid,
+      borderRadius: 14,
+      padding: "20px 18px",
+      border: "1px solid ".concat(brand.navyLight),
+      display: "flex",
+      flexDirection: "column",
+      gap: 12
+    },
+    landingLabel: {
+      fontSize: 10,
+      fontWeight: 600,
+      letterSpacing: "0.12em",
+      textTransform: "uppercase",
+      color: "rgba(43,201,156,0.8)",
+      marginBottom: 4
+    },
+    landingInput: {
+      width: "100%",
+      padding: "11px 14px",
+      background: brand.navy,
+      border: "1.5px solid ".concat(brand.navyLight),
+      borderRadius: 9,
+      fontFamily: "'DM Sans', sans-serif",
+      fontSize: 13.5,
+      color: brand.white,
+      outline: "none",
+      transition: "border-color 0.18s, box-shadow 0.18s",
+      letterSpacing: "0.04em"
+    },
+    landingBtn: {
+      width: "100%",
+      padding: "12px 16px",
+      borderRadius: 9,
+      background: brand.teal,
+      color: brand.white,
+      fontFamily: "'DM Sans', sans-serif",
+      fontSize: 14,
+      fontWeight: 600,
+      border: "none",
+      cursor: "pointer",
+      boxShadow: "0 3px 14px rgba(43,201,156,0.3)",
+      transition: "background 0.15s, box-shadow 0.15s",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 8
+    },
+    landingHint: {
+      fontSize: 11,
+      color: "rgba(255,255,255,0.35)",
+      textAlign: "center",
+      lineHeight: 1.5
+    }
+  };
+
+  // ── Render: Landing page (no API key) ────────────────────────────────────────
+  if (!apiKey) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: S.root
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("style", null, globalCss), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: S.landing
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: S.landingLogo
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+      src: "assets/icon-64.png",
+      alt: "Excelisor",
+      style: {
+        width: 72,
+        height: 72,
+        objectFit: "contain"
+      }
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        textAlign: "center"
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: _objectSpread(_objectSpread({}, S.brandName), {}, {
+        fontSize: 22
+      })
+    }, "EXCEL", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      style: {
+        color: brand.teal
+      }
+    }, "ISOR")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: _objectSpread(_objectSpread({}, S.brandSub), {}, {
+        marginTop: 4,
+        color: "rgba(255,255,255,0.4)"
+      })
+    }, "AI Excel Assistant"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: S.landingCard
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: S.landingLabel
+    }, "OpenAI API Key"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("input", {
+      id: "apiKeyInput",
+      type: "password",
+      className: "xc-input",
+      placeholder: "sk-\u2026",
+      style: S.landingInput,
+      disabled: loading
+    }), keyError && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        color: "#ff8080",
+        fontSize: 11.5,
+        marginTop: 5
+      }
+    }, keyError)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: _objectSpread(_objectSpread({}, S.landingLabel), {}, {
+        marginBottom: 6
+      })
+    }, "AI Model"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
+      value: selectedModel,
+      onChange: function onChange(e) {
+        setSelectedModel(e.target.value);
+        localStorage.setItem("openai_model", e.target.value);
+      },
+      style: _objectSpread(_objectSpread({}, S.landingInput), {}, {
+        appearance: "none",
+        cursor: "pointer"
+      }),
+      disabled: loading
+    }, MODELS.map(function (m) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+        key: m.value,
+        value: m.value
+      }, m.label, " \u2014 ", m.hint);
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+      style: S.landingBtn,
+      disabled: loading,
+      className: "xc-btn",
+      onClick: /*#__PURE__*/_asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee14() {
+        var val, res, data, _t24;
+        return _regenerator().w(function (_context16) {
+          while (1) switch (_context16.p = _context16.n) {
+            case 0:
+              val = document.getElementById("apiKeyInput").value.trim();
+              if (!(!val || !val.startsWith("sk-"))) {
+                _context16.n = 1;
+                break;
+              }
+              setKeyError("Please enter a valid OpenAI API key (starts with sk-).");
+              return _context16.a(2);
+            case 1:
+              setKeyError("");
+              setLoading(true);
+              _context16.p = 2;
+              _context16.n = 3;
+              return fetch("".concat(apiBase, "/validate-key"), {
+                method: "GET",
+                headers: {
+                  Authorization: "Bearer ".concat(val),
+                  "X-OpenAI-Model": selectedModel
+                }
+              });
+            case 3:
+              res = _context16.v;
+              _context16.n = 4;
+              return res.json();
+            case 4:
+              data = _context16.v;
+              if (data.valid) {
+                localStorage.setItem("openai_api_key", val);
+                setApiKey(val);
+              } else {
+                setKeyError(data.message || "Invalid API key.");
+              }
+              _context16.n = 6;
+              break;
+            case 5:
+              _context16.p = 5;
+              _t24 = _context16.v;
+              setKeyError("Could not reach backend. Make sure the server is running.");
+            case 6:
+              _context16.p = 6;
+              setLoading(false);
+              return _context16.f(6);
+            case 7:
+              return _context16.a(2);
+          }
+        }, _callee14, null, [[2, 5, 6, 7]]);
+      }))
+    }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement((react__WEBPACK_IMPORTED_MODULE_0___default().Fragment), null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Spinner, null), " Verifying\u2026") : "Connect →")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("p", {
+      style: _objectSpread(_objectSpread({}, S.landingHint), {}, {
+        marginTop: 16
+      })
+    }, "Your key is stored locally and never sent anywhere except your own backend.")));
+  }
+
+  // ── Render: Main app ─────────────────────────────────────────────────────────
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: S.root
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("style", null, globalCss), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("style", null, "\n        .chat-bubble-enter { animation: fadeUp .2s ease both; }\n        @keyframes fadeUp { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }\n        .xc-option-btn:hover { background: ".concat(brand.teal, " !important; color:#fff !important; border-color:").concat(brand.teal, " !important; }\n        .xc-send-btn:hover { opacity: .88; }\n        .xc-send-btn:disabled { opacity: .45; cursor: not-allowed; }\n      ")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("header", {
+    style: S.header
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("img", {
+    src: "assets/icon-64.png",
+    alt: "Excelisor",
+    style: S.logoImg
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
-      marginBottom: 15
+      display: "flex",
+      flexDirection: "column",
+      lineHeight: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    style: S.brandName
+  }, "EXCEL", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    style: {
+      color: brand.teal
+    }
+  }, "ISOR")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    style: S.brandSub
+  }, "AI Excel Assistant")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    style: S.settingsToggle,
+    title: settingsOpen ? "Hide settings" : "Settings",
+    onClick: function onClick() {
+      return setSettingsOpen(function (o) {
+        return !o;
+      });
+    },
+    "aria-label": "Toggle settings"
+  }, settingsOpen ? "✕" : "⚙")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: _objectSpread(_objectSpread({}, S.body), {}, {
+      padding: 0,
+      overflow: "hidden"
+    })
+  }, settingsOpen && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: _objectSpread(_objectSpread({}, S.settingsPanel), {}, {
+      margin: "8px 8px 0"
+    }),
+    className: "settings-panel-enter"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("label", {
+    style: S.toggleRow
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    style: S.toggleText
+  }, "AI Model")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("select", {
+    value: selectedModel,
+    onChange: function onChange(e) {
+      setSelectedModel(e.target.value);
+      localStorage.setItem("openai_model", e.target.value);
+    },
+    className: "xc-input",
+    style: _objectSpread(_objectSpread({}, S.select), {}, {
+      marginTop: 4
+    }),
+    disabled: loading
+  }, MODELS.map(function (m) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("option", {
+      key: m.value,
+      value: m.value
+    }, m.label, " \u2014 ", m.hint);
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      borderTop: "1px solid ".concat(brand.border),
+      paddingTop: 8
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: classifyIntent,
-    disabled: loading || !question.trim(),
-    style: {
-      padding: "8px 16px",
-      marginRight: 10,
-      background: "#0078d4",
-      color: "white",
-      border: "none",
-      borderRadius: 4,
-      cursor: loading ? "not-allowed" : "pointer",
-      opacity: loading || !question.trim() ? 0.6 : 1
-    }
-  }, "\uD83E\uDD14 Classify Intent"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: askAI,
-    disabled: loading || !question.trim(),
-    style: {
-      padding: "8px 16px",
-      marginRight: 10,
-      background: "#107C10",
-      color: "white",
-      border: "none",
-      borderRadius: 4,
-      cursor: loading ? "not-allowed" : "pointer",
-      opacity: loading || !question.trim() ? 0.6 : 1
-    }
-  }, "\uD83D\uDCAC Ask AI"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: executeExcelAction,
-    disabled: loading || !question.trim(),
-    style: {
-      padding: "8px 16px",
-      marginRight: 10,
-      background: "#D13438",
-      color: "white",
-      border: "none",
-      borderRadius: 4,
-      cursor: loading ? "not-allowed" : "pointer",
-      opacity: loading || !question.trim() ? 0.6 : 1
-    }
-  }, "\u26A1 Excel Action"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
-    onClick: auditData,
-    disabled: loading,
-    style: {
-      padding: "8px 16px",
-      background: "#8A2BE2",
-      color: "white",
-      border: "none",
-      borderRadius: 4,
-      cursor: loading ? "not-allowed" : "pointer",
-      opacity: loading ? 0.6 : 1
-    }
-  }, "\uD83D\uDD0D Audit Data")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(ProgressIndicator, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      marginTop: 20,
-      minHeight: 100,
-      padding: 15,
-      background: "#f8f9fa",
-      borderRadius: 5,
-      whiteSpace: "pre-wrap",
-      fontSize: 13,
-      lineHeight: 1.4,
-      border: "1px solid #e9ecef"
-    }
-  }, output || "Results will appear here..."), loading && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
-    style: {
-      marginTop: 10,
-      padding: 10,
-      background: "#fff3cd",
-      border: "1px solid #ffeaa7",
-      borderRadius: 4,
+    className: "xc-btn xc-btn-danger",
+    style: _objectSpread(_objectSpread({}, S.btnGhost), {}, {
+      color: brand.errorText,
+      borderColor: "#f5c6c2",
       fontSize: 12,
-      color: "#856404"
+      gap: 6
+    }),
+    onClick: function onClick() {
+      localStorage.removeItem("openai_api_key");
+      setApiKey("");
     }
-  }, "\uD83D\uDD04 Processing your request... This may take a moment for large datasets."), lastIntent && !loading && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, "\uD83D\uDD11 Change API Key"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    ref: chatFeed,
     style: {
-      marginTop: 15,
-      padding: 10,
-      background: lastIntent.action_type === "excel" ? "#e8f5e8" : "#e8f4fd",
-      borderRadius: 4,
-      fontSize: 11
+      flex: 1,
+      overflowY: "auto",
+      padding: "12px 10px 8px",
+      display: "flex",
+      flexDirection: "column",
+      gap: 10,
+      minHeight: 0
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Last Classification:"), " ", lastIntent.action_type.toUpperCase(), "(", (lastIntent.confidence * 100).toFixed(0), "% confidence)", lastIntent.suggested_operations && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+  }, messages.length === 0 && !loading && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
     style: {
-      marginTop: 5
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      flex: 1,
+      gap: 8,
+      opacity: .65,
+      paddingTop: 20
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("strong", null, "Operations:"), " ", lastIntent.suggested_operations.join(", "))));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    style: {
+      fontSize: 32
+    }
+  }, "\u2726"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    style: {
+      fontSize: 13,
+      fontWeight: 600,
+      color: brand.text
+    }
+  }, "Ask me anything about your data"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    style: {
+      fontSize: 11,
+      color: brand.textLight,
+      textAlign: "center",
+      maxWidth: "26ch",
+      lineHeight: 1.6
+    }
+  }, "Select a range in Excel, then type your question below. I'll figure out the best action automatically.")), messages.map(function (msg, i) {
+    var _msg$options;
+    var isUser = msg.role === "user";
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      key: i,
+      className: "chat-bubble-enter",
+      style: {
+        display: "flex",
+        flexDirection: "column",
+        alignItems: isUser ? "flex-end" : "flex-start",
+        gap: 4
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+      style: {
+        fontSize: 10,
+        color: brand.textLight,
+        marginBottom: 1
+      }
+    }, isUser ? "You" : "\u2726 Excelisor".concat(msg.mode ? " \xB7 ".concat(modeIcon[msg.mode] || "", " ").concat(msg.mode) : "")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        maxWidth: "88%",
+        padding: "9px 12px",
+        borderRadius: isUser ? "12px 12px 3px 12px" : "12px 12px 12px 3px",
+        background: isUser ? brand.teal : brand.surface,
+        color: isUser ? "#fff" : brand.text,
+        fontSize: 12.5,
+        lineHeight: 1.55,
+        whiteSpace: "pre-wrap",
+        boxShadow: "0 1px 3px rgba(0,0,0,.07)",
+        border: isUser ? "none" : "1px solid ".concat(brand.border)
+      }
+    }, msg.content), msg.type === "clarification" && ((_msg$options = msg.options) === null || _msg$options === void 0 ? void 0 : _msg$options.length) > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+      style: {
+        display: "flex",
+        flexWrap: "wrap",
+        gap: 6,
+        marginTop: 2,
+        maxWidth: "88%"
+      }
+    }, msg.options.map(function (opt, oi) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+        key: oi,
+        className: "xc-option-btn",
+        disabled: loading,
+        onClick: function onClick() {
+          return handleClarification(opt, msg.originalQuestion, msg.round);
+        },
+        style: {
+          padding: "5px 10px",
+          borderRadius: 20,
+          border: "1px solid ".concat(brand.teal),
+          background: "transparent",
+          color: brand.teal,
+          fontSize: 11.5,
+          cursor: "pointer",
+          transition: "all .15s",
+          fontWeight: 500
+        }
+      }, opt);
+    })));
+  }), loading && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    className: "chat-bubble-enter",
+    style: {
+      display: "flex",
+      alignItems: "center",
+      gap: 8
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement(Spinner, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    style: {
+      fontSize: 11.5,
+      color: brand.textLight
+    }
+  }, "Thinking\u2026"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: {
+      borderTop: "1px solid ".concat(brand.border),
+      padding: "8px 10px",
+      background: brand.surface,
+      display: "flex",
+      gap: 8,
+      alignItems: "flex-end"
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("textarea", {
+    className: "xc-input",
+    style: {
+      flex: 1,
+      resize: "none",
+      minHeight: 38,
+      maxHeight: 100,
+      padding: "8px 10px",
+      fontSize: 12.5,
+      borderRadius: 10,
+      lineHeight: 1.45,
+      border: "1.5px solid ".concat(brand.border),
+      outline: "none",
+      background: brand.bg,
+      color: brand.text,
+      fontFamily: "inherit"
+    },
+    value: input,
+    onChange: function onChange(e) {
+      return setInput(e.target.value);
+    },
+    placeholder: "Ask anything about your selected data\u2026",
+    disabled: loading,
+    rows: 1,
+    onKeyDown: function onKeyDown(e) {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("button", {
+    className: "xc-send-btn",
+    disabled: loading || !input.trim(),
+    onClick: function onClick() {
+      return sendMessage();
+    },
+    style: {
+      width: 38,
+      height: 38,
+      borderRadius: 10,
+      border: "none",
+      background: brand.teal,
+      color: "#fff",
+      fontSize: 16,
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      flexShrink: 0,
+      transition: "opacity .15s"
+    },
+    title: "Send (Enter)"
+  }, "\u27A4"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("footer", {
+    style: S.footer
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("div", {
+    style: S.footerDot
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    style: S.footerText
+  }, "Excelisor \xB7 Powered by AI"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default().createElement("span", {
+    style: {
+      fontSize: 10.5,
+      color: brand.textLight
+    }
+  }, (_MODELS$find = MODELS.find(function (m) {
+    return m.value === selectedModel;
+  })) === null || _MODELS$find === void 0 ? void 0 : _MODELS$find.label)));
 }
-/* harmony default export */ __webpack_exports__["default"] = (App);
 
 /***/ }),
 

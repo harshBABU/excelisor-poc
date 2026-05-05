@@ -157,7 +157,6 @@ def route(question: str, df: pd.DataFrame, context: Optional[str] = None) -> Rou
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt},
             ],
-            temperature=0.2,
             response_format={"type": "json_object"},
         )
         raw = (resp.choices[0].message.content or "").strip()

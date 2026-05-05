@@ -120,6 +120,85 @@ const Label = ({ children, style = {} }) => (
   </div>
 );
 
+const isMonthlyChartIntent = (normalized, userQuestion = "") => {
+  const haystack = [
+    userQuestion,
+    normalized?.chartTitle,
+    ...(Array.isArray(normalized?.categoryColumn) ? normalized.categoryColumn : [normalized?.categoryColumn]),
+  ].filter(Boolean).join(" ").toLowerCase();
+  return /\b(month on month|month-on-month|monthly|mom)\b/.test(haystack);
+};
+
+const excelSerialToDate = (value) => {
+  const numeric = typeof value === "number" ? value : Number(value);
+  if (!Number.isFinite(numeric) || numeric < 20000 || numeric > 60000) return null;
+  return new Date(Date.UTC(1899, 11, 30) + numeric * 24 * 60 * 60 * 1000);
+};
+
+const parseDateLikeValue = (value) => {
+  if (value instanceof Date && !Number.isNaN(value.getTime())) return value;
+  const serialDate = excelSerialToDate(value);
+  if (serialDate) return serialDate;
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.getTime()) ? null : parsed;
+};
+
+const formatMonthKey = (date) => {
+  const year = date.getUTCFullYear();
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  return `${year}-${month}`;
+};
+
+const chooseDateColumn = (headers, cat, normalized) => {
+  const preferred = [
+    ...(Array.isArray(cat) ? cat : []),
+    ...(Array.isArray(normalized?.categoryColumn) ? normalized.categoryColumn : [normalized?.categoryColumn]),
+    "OrderDate",
+    "Date",
+    "DeliveryDate",
+  ].filter(Boolean);
+
+  for (const name of preferred) {
+    const match = headers.find(h => h.toLowerCase() === String(name).toLowerCase());
+    if (match && /(date|time|month|year)/i.test(match)) return match;
+  }
+  return headers.find(h => /(orderdate|date|deliverydate|time)/i.test(h)) || null;
+};
+
+const buildMonthlyChartRows = (values, headers, normalized, cat, vals, aggregationsRaw, userQuestion = "") => {
+  if (!isMonthlyChartIntent(normalized, userQuestion)) return null;
+
+  const dateCol = chooseDateColumn(headers, cat, normalized);
+  const valueCol = (vals || []).find(v => headers.includes(v)) || headers.find(h => /total.*price|sales|revenue|amount/i.test(h));
+  if (!dateCol || !valueCol) return null;
+
+  const dateIdx = headers.indexOf(dateCol);
+  const valueIdx = headers.indexOf(valueCol);
+  if (dateIdx === -1 || valueIdx === -1) return null;
+
+  const totals = new Map();
+  for (let i = 1; i < values.length; i++) {
+    const row = values[i];
+    if (!row) continue;
+    const date = parseDateLikeValue(row[dateIdx]);
+    const amount = Number(row[valueIdx]);
+    if (!date || !Number.isFinite(amount)) continue;
+    const key = formatMonthKey(date);
+    totals.set(key, (totals.get(key) || 0) + amount);
+  }
+
+  const rows = Array.from(totals.entries())
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([month, total]) => [month, total]);
+  if (rows.length === 0) return null;
+
+  const aggregation = aggregationsRaw?.[0] || "SUM";
+  return {
+    headers: ["Month", `${valueCol} (${aggregation})`],
+    rows,
+  };
+};
+
 const StatusBadge = ({ loading, output }) => {
   if (!output && !loading) return null;
   const isError = output?.startsWith("❌");
@@ -487,7 +566,24 @@ export default function App() {
           inferenceRange.merge(true); inferenceRange.format.wrapText = true; inferenceRange.format.verticalAlignment = "Top";
           await context.sync();
 
-          if (catTitles.length > 0) {
+          const monthlyChartRows = buildMonthlyChartRows(values, headers, normalized, cat, vals, aggregationsRaw, question);
+          if (monthlyChartRows) {
+            const tableRows = monthlyChartRows.rows.length + 1;
+            const targetBoundRange = dashboardSheet.getRange("A5").getResizedRange(tableRows - 1, 1);
+            targetBoundRange.values = [monthlyChartRows.headers, ...monthlyChartRows.rows];
+            targetBoundRange.format.autofitColumns();
+            ["InsideHorizontal", "InsideVertical", "EdgeBottom", "EdgeLeft", "EdgeRight", "EdgeTop"].forEach(b => {
+              targetBoundRange.format.borders.getItem(b).style = "Continuous";
+            });
+            dashboardSheet.getRange("A5:B5").format.font.bold = true;
+            dashboardSheet.getRange("A5:B5").format.fill.color = "#EBF1F5";
+            await context.sync();
+
+            const chart = dashboardSheet.charts.add(type, targetBoundRange, "Auto");
+            chart.title.text = normalized.chartTitle || "Month-on-Month Sales";
+            chart.top = 80; chart.left = 240; chart.width = 560; chart.height = 350;
+            await context.sync();
+          } else if (catTitles.length > 0) {
             // ── STEP 1: JS extracts unique category combos only (lightweight, no math) ──
             const catIndices = catTitles.map(c => headers.indexOf(c)).filter(i => i !== -1);
             const seenKeys = new Set();
@@ -726,7 +822,21 @@ export default function App() {
       dashboardSheet.getRange("A2:G3").format.wrapText = true;
       await context.sync();
 
-      if (catTitles.length > 0) {
+      const monthlyChartRows = buildMonthlyChartRows(values, headers, normalized, cat, vals, aggs, normalized.chartTitle || "");
+      if (monthlyChartRows) {
+        const tableRows = monthlyChartRows.rows.length + 1;
+        const targetBoundRange = dashboardSheet.getRange("A5").getResizedRange(tableRows - 1, 1);
+        targetBoundRange.values = [monthlyChartRows.headers, ...monthlyChartRows.rows];
+        targetBoundRange.format.autofitColumns();
+        dashboardSheet.getRange("A5:B5").format.font.bold = true;
+        dashboardSheet.getRange("A5:B5").format.fill.color = "#EBF1F5";
+        await context.sync();
+
+        const chart = dashboardSheet.charts.add(type, targetBoundRange, "Auto");
+        chart.title.text = normalized.chartTitle || "Month-on-Month Sales";
+        chart.top = 80; chart.left = 240; chart.width = 560; chart.height = 350;
+        await context.sync();
+      } else if (catTitles.length > 0) {
         // --- Hybrid formula injection (same as aiChart) ---
         const catIndices = catTitles.map(c => headers.indexOf(c)).filter(i => i !== -1);
         const seenKeys = new Set(); const uniqueRows = [];
