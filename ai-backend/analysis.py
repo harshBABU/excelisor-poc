@@ -597,6 +597,13 @@ def analyze_dataframe_agent(question: str, df: pd.DataFrame) -> str:
     if not question.strip():
         raise HTTPException(400, "Question required")
 
+    if df is None or df.empty or df.shape[1] == 0:
+        logger.error("[AGENT ABORT] Empty dataframe supplied to analysis agent")
+        raise HTTPException(
+            400,
+            "No tabular data was provided. Please include at least one column and one row before asking a question.",
+        )
+
     profile = _profile_dataframe(df)
     semantics = _infer_semantics(profile)
     intent = _classify_intent(question, profile)  # classify once, reuse across retries
