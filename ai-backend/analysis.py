@@ -3,9 +3,11 @@ from __future__ import annotations
 import json
 import logging
 import os
+import re
 from typing import Optional, Dict, Any, List
 
 import pandas as pd
+from pandas.api.types import is_datetime64_any_dtype, is_numeric_dtype
 from fastapi import HTTPException
 
 try:
@@ -61,6 +63,7 @@ PLAN_FORMAT_EXAMPLE = """
 VALID STEP TYPES — use EXACTLY these string values for "step":
 
   {"step": "derive", "new_column": "TOTAL_SALES", "formula": "RETAIL_SALES + WAREHOUSE_SALES"}
+  {"step": "derive", "new_column": "ORDER_MONTH", "formula": "MONTH_START(OrderDate)"}
   {"step": "aggregate", "group_by": ["MONTH"], "aggregations": [{"column": "TOTAL_SALES", "metric": "sum"}]}
   {"step": "sort", "column": "TOTAL_SALES", "order": "desc"}
   {"step": "top_n", "column": "TOTAL_SALES", "top_n": 1}
@@ -72,6 +75,13 @@ VALID STEP TYPES — use EXACTLY these string values for "step":
 NEVER use integers (1, 2, 3...) for "step".
 NEVER invent new step types.
 ONLY use: derive, aggregate, sort, top_n, bottom_n, rank, growth, share_of_total.
+
+SUPPORTED derive formulas:
+- Arithmetic over existing safe column names, for example: Quantity * UnitPrice
+- Copying an existing column, for example: TotalPrice
+- Month buckets from a date/time column: MONTH_START(OrderDate)
+
+Do NOT use unsupported SQL or Excel functions such as DATE_TRUNC, YEAR(), or MONTH().
 """
 
 
@@ -205,6 +215,8 @@ STRICT RULES:
 - aggregate MUST include "group_by" and "aggregations"
 - Return ONLY a JSON list, no explanation, no markdown
 - Use safe_columns names (underscores, not spaces) in all formulas and column references
+- For month-on-month, monthly trend, or monthly sales questions, group by a derived MONTH_START(<time_column>) column and sort it ascending
+- Do NOT emit DATE_TRUNC, YEAR(), MONTH(), or other functions unless they are listed under SUPPORTED derive formulas
 - Only use top_n or bottom_n as the FINAL step if the question EXPLICITLY asks for "top N", "best N", "worst N", or "bottom N" results
 - For open-ended questions like "give me insights", "analyze the data", "what are the trends", "interesting patterns" — do NOT use top_n or bottom_n — return ALL aggregated rows so the responder has full context to generate rich insights
 
@@ -398,6 +410,82 @@ def _force_aggregate_if_needed(intent: Dict[str, Any], df: pd.DataFrame) -> pd.D
     return result
 
 
+def _column_to_datetime(series: pd.Series) -> pd.Series:
+    """Parse normal dates and Excel serial dates into pandas datetimes."""
+    if is_datetime64_any_dtype(series):
+        return series
+
+    if is_numeric_dtype(series):
+        numeric = pd.to_numeric(series, errors="coerce")
+        non_null = numeric.dropna()
+        if not non_null.empty:
+            likely_excel_serial = non_null.between(20000, 60000).mean() >= 0.8
+            if likely_excel_serial:
+                return pd.to_datetime(
+                    numeric,
+                    unit="D",
+                    origin="1899-12-30",
+                    errors="coerce",
+                )
+
+    return pd.to_datetime(series, errors="coerce")
+
+
+def _extract_function_arg(formula: str, function_name: str) -> Optional[str]:
+    pattern = rf"^\s*{function_name}\s*\(\s*([A-Za-z_][A-Za-z0-9_]*)\s*\)\s*$"
+    match = re.match(pattern, formula, flags=re.IGNORECASE)
+    return match.group(1) if match else None
+
+
+def _derive_date_formula(formula: str, current_df: pd.DataFrame) -> Optional[pd.Series]:
+    """Handle date formulas the planner commonly emits but pandas.eval cannot."""
+    stripped = formula.strip()
+
+    month_start_col = _extract_function_arg(stripped, "MONTH_START")
+    if month_start_col:
+        if month_start_col not in current_df.columns:
+            raise KeyError(month_start_col)
+        return _column_to_datetime(current_df[month_start_col]).dt.to_period("M").dt.to_timestamp()
+
+    date_trunc_patterns = [
+        r"^\s*DATE_TRUNC\s*\(\s*([A-Za-z_][A-Za-z0-9_]*)\s*,\s*['\"]month['\"]\s*\)\s*$",
+        r"^\s*DATE_TRUNC\s*\(\s*['\"]month['\"]\s*,\s*([A-Za-z_][A-Za-z0-9_]*)\s*\)\s*$",
+    ]
+    for pattern in date_trunc_patterns:
+        match = re.match(pattern, stripped, flags=re.IGNORECASE)
+        if match:
+            col = match.group(1)
+            if col not in current_df.columns:
+                raise KeyError(col)
+            return _column_to_datetime(current_df[col]).dt.to_period("M").dt.to_timestamp()
+
+    year_col = _extract_function_arg(stripped, "YEAR")
+    if year_col:
+        if year_col not in current_df.columns:
+            raise KeyError(year_col)
+        return _column_to_datetime(current_df[year_col]).dt.year
+
+    month_col = _extract_function_arg(stripped, "MONTH")
+    if month_col:
+        if month_col not in current_df.columns:
+            raise KeyError(month_col)
+        return _column_to_datetime(current_df[month_col]).dt.month
+
+    year_month_match = re.match(
+        r"^\s*YEAR\s*\(\s*([A-Za-z_][A-Za-z0-9_]*)\s*\)\s*\*\s*100\s*\+\s*MONTH\s*\(\s*\1\s*\)\s*$",
+        stripped,
+        flags=re.IGNORECASE,
+    )
+    if year_month_match:
+        col = year_month_match.group(1)
+        if col not in current_df.columns:
+            raise KeyError(col)
+        dates = _column_to_datetime(current_df[col])
+        return dates.dt.year * 100 + dates.dt.month
+
+    return None
+
+
 # =========================
 # Executor
 # =========================
@@ -460,7 +548,13 @@ def _execute(plan, df):
             new_col = step["new_column"]
             logger.info(f"      [PYTHON DERIVE] Formula: {formula} → column: {new_col}")
             try:
-                current_df[new_col] = current_df.eval(formula)
+                date_result = _derive_date_formula(formula, current_df)
+                if date_result is not None:
+                    current_df[new_col] = date_result
+                elif formula in current_df.columns:
+                    current_df[new_col] = current_df[formula]
+                else:
+                    current_df[new_col] = current_df.eval(formula)
                 # logger.info(f"      Derived column '{new_col}' sample: {current_df[new_col].head().tolist()}")  # verbose
             except Exception as e:
                 logger.error(f"      Derive FAILED: {e}")
